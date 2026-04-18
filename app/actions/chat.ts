@@ -36,45 +36,60 @@ TU TONO Y REGLAS:
 `;
 
 export async function getChatResponse(message: string, history: { role: string; parts: { text: string }[] }[]) {
-  if (!genAI) {
+  const apiKey = process.env.GEMINI_API_KEY?.trim();
+  
+  if (!apiKey) {
     return { error: "Configuración de IA incompleta (Falta GEMINI_API_KEY).", success: false };
   }
 
-  // Intentar primero con flash 1.5, luego con pro 1.5 si falla
-  const modelsToTry = ["gemini-1.5-flash", "gemini-1.5-pro", "gemini-pro"];
-  let lastError = "";
+  // Endpoint REST directo (v1 es más estable que v1beta para modelos 1.5)
+  const URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-  for (const modelName of modelsToTry) {
-    try {
-      const model = genAI.getGenerativeModel({ 
-        model: modelName,
+  // Preparar los contenidos combinando el historial y el mensaje actual
+  const contents = [
+    ...history.map(h => ({
+      role: h.role === "model" ? "model" : "user",
+      parts: h.parts
+    })),
+    { role: "user", parts: [{ text: message }] }
+  ];
+
+  try {
+    const response = await fetch(URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents,
         systemInstruction: {
-          role: "system",
           parts: [{ text: SYSTEM_PROMPT }]
+        },
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 800,
         }
-      });
+      })
+    });
 
-      const chat = model.startChat({
-        history: history.map(h => ({
-          role: h.role,
-          parts: h.parts
-        })),
-      });
+    const data = await response.json();
 
-      const result = await chat.sendMessage(message);
-      const response = await result.response;
-      const text = response.text();
-
-      return { text, success: true };
-    } catch (error: any) {
-      console.error(`Fallo con modelo ${modelName}:`, error);
-      lastError = error?.message || "Error desconocido";
-      continue; // Probar el siguiente modelo
+    if (!response.ok) {
+      console.error("Error en API Rest:", data);
+      throw new Error(data.error?.message || "Error desconocido en la API");
     }
-  }
 
-  return { 
-    error: `Error tras varios intentos: ${lastError}. Por favor, verifica que tu GEMINI_API_KEY sea correcta y tenga permisos.`, 
-    success: false 
-  };
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    
+    if (!text) {
+      throw new Error("La IA respondió pero no generó texto.");
+    }
+
+    return { text, success: true };
+
+  } catch (error: any) {
+    console.error("Fallo definitivo en ChatAgent:", error);
+    return { 
+      error: `Error de conexión: ${error.message}. Asegúrate de que la API KEY de Google AI Studio sea válida.`, 
+      success: false 
+    };
+  }
 }
