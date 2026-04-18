@@ -42,17 +42,26 @@ export async function getChatResponse(message: string, history: { role: string; 
     return { error: "Configuración de IA incompleta (Falta GEMINI_API_KEY).", success: false };
   }
 
-  // Regresamos a v1beta que tiene soporte completo para system_instruction
-  const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  // Usamos v1 (la versión estable de producción)
+  const URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-  // Preparar los contenidos
-  const contents = history.map(h => ({
-    role: h.role === "model" ? "model" : "user",
-    parts: h.parts
-  }));
-
-  // Añadir la pregunta actual si el historial no la incluye
-  contents.push({ role: "user", parts: [{ text: message }] });
+  // Inyectamos las instrucciones de sistema como un preámbulo en el historial de mensajes
+  // Esto es compatible con todas las versiones de la API.
+  const contents = [
+    { 
+      role: "user", 
+      parts: [{ text: `INSTRUCCIONES DE IDENTIDAD Y CONOCIMIENTO (LEER PRIMERO): ${SYSTEM_PROMPT}` }] 
+    },
+    { 
+      role: "model", 
+      parts: [{ text: "Entendido. He procesado el Proyecto Fundacional de La Unión Americana. Soy el Agente oficial, listo para informar con dignidad, unidad y orgullo latinoamericano. ¿En qué puedo ayudarte hoy?" }] 
+    },
+    ...history.map(h => ({
+      role: h.role === "model" ? "model" : "user",
+      parts: h.parts
+    })),
+    { role: "user", parts: [{ text: message }] }
+  ];
 
   try {
     const response = await fetch(URL, {
@@ -60,9 +69,6 @@ export async function getChatResponse(message: string, history: { role: string; 
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents,
-        system_instruction: { // Snake_case es obligatorio en REST v1beta
-          parts: [{ text: SYSTEM_PROMPT }]
-        },
         generationConfig: {
           temperature: 0.7,
           maxOutputTokens: 1000,
