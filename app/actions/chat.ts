@@ -43,11 +43,17 @@ export async function getChatResponse(message: string, history: { role: string; 
   try {
     const model = genAI.getGenerativeModel({ 
       model: "gemini-1.5-flash",
-      systemInstruction: SYSTEM_PROMPT 
+      systemInstruction: {
+        role: "system",
+        parts: [{ text: SYSTEM_PROMPT }]
+      }
     });
 
     const chat = model.startChat({
-      history: history,
+      history: history.map(h => ({
+        role: h.role,
+        parts: h.parts
+      })),
     });
 
     const result = await chat.sendMessage(message);
@@ -55,8 +61,13 @@ export async function getChatResponse(message: string, history: { role: string; 
     const text = response.text();
 
     return { text, success: true };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error en Gemini API:", error);
-    return { error: "Lo siento, tuve un problema al procesar tu mensaje. Inténtalo de nuevo más tarde.", success: false };
+    // Extraer mensaje de error más descriptivo si está disponible
+    const errorMsg = error?.message || "Error interno";
+    return { 
+      error: `Error: ${errorMsg}. Por favor, verifica tu GEMINI_API_KEY.`, 
+      success: false 
+    };
   }
 }

@@ -448,10 +448,11 @@ label {
 
   /* Chat Mobile Adjustments */
   .chat-window {
-    width: 90vw;
-    right: 5vw;
-    bottom: 80px;
+    width: min(400px, 95vw);
+    right: 2.5vw;
+    bottom: 85px;
     height: 60vh;
+    max-height: 500px;
   }
 }
 
@@ -496,15 +497,17 @@ label {
   position: fixed;
   bottom: 6rem;
   right: 2rem;
-  width: 400px;
-  height: 500px;
-  background: rgba(10, 10, 18, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 255, 238, 0.2);
+  width: min(400px, 90vw);
+  height: min(500px, 70vh);
+  background: rgba(10, 10, 18, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 255, 238, 0.3);
   border-radius: var(--radius-xl);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+              inset 0 0 20px rgba(0, 255, 238, 0.05);
   z-index: 1001;
   overflow: hidden;
 }
