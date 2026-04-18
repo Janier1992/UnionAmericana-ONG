@@ -42,17 +42,17 @@ export async function getChatResponse(message: string, history: { role: string; 
     return { error: "Configuración de IA incompleta (Falta GEMINI_API_KEY).", success: false };
   }
 
-  // Endpoint REST directo (v1 es más estable que v1beta para modelos 1.5)
-  const URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  // Regresamos a v1beta que tiene soporte completo para system_instruction
+  const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-  // Preparar los contenidos combinando el historial y el mensaje actual
-  const contents = [
-    ...history.map(h => ({
-      role: h.role === "model" ? "model" : "user",
-      parts: h.parts
-    })),
-    { role: "user", parts: [{ text: message }] }
-  ];
+  // Preparar los contenidos
+  const contents = history.map(h => ({
+    role: h.role === "model" ? "model" : "user",
+    parts: h.parts
+  }));
+
+  // Añadir la pregunta actual si el historial no la incluye
+  contents.push({ role: "user", parts: [{ text: message }] });
 
   try {
     const response = await fetch(URL, {
@@ -60,12 +60,12 @@ export async function getChatResponse(message: string, history: { role: string; 
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents,
-        systemInstruction: {
+        system_instruction: { // Snake_case es obligatorio en REST v1beta
           parts: [{ text: SYSTEM_PROMPT }]
         },
         generationConfig: {
           temperature: 0.7,
-          maxOutputTokens: 800,
+          maxOutputTokens: 1000,
         }
       })
     });
