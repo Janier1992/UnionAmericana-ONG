@@ -42,29 +42,48 @@ export async function getChatResponse(message: string, history: { role: string; 
     return { error: "Configuración de IA incompleta (Falta GEMINI_API_KEY).", success: false };
   }
 
-  // Usamos v1 (la versión estable de producción)
-  const URL = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-  // Inyectamos las instrucciones de sistema como un preámbulo en el historial de mensajes
-  // Esto es compatible con todas las versiones de la API.
-  const contents = [
-    { 
-      role: "user", 
-      parts: [{ text: `INSTRUCCIONES DE IDENTIDAD Y CONOCIMIENTO (LEER PRIMERO): ${SYSTEM_PROMPT}` }] 
-    },
-    { 
-      role: "model", 
-      parts: [{ text: "Entendido. He procesado el Proyecto Fundacional de La Unión Americana. Soy el Agente oficial, listo para informar con dignidad, unidad y orgullo latinoamericano. ¿En qué puedo ayudarte hoy?" }] 
-    },
-    ...history.map(h => ({
-      role: h.role === "model" ? "model" : "user",
-      parts: h.parts
-    })),
-    { role: "user", parts: [{ text: message }] }
-  ];
-
   try {
-    const response = await fetch(URL, {
+    // 1. Diagnóstico: Preguntar a Google qué modelos están disponibles para ESTA clave
+    const listUrl = `https://generativelanguage.googleapis.com/v1/models?key=${apiKey}`;
+    const listResponse = await fetch(listUrl);
+    const listData = await listResponse.json();
+
+    if (!listResponse.ok) {
+      throw new Error(`Error al listar modelos: ${listData.error?.message || "Sin mensaje"}`);
+    }
+
+    // 2. Seleccionar el mejor modelo disponible (priorizando flash o pro)
+    const availableModels = listData.models || [];
+    const selectedModel = availableModels.find((m: any) => 
+      m.supportedGenerationMethods.includes("generateContent") && 
+      (m.name.includes("flash") || m.name.includes("pro"))
+    );
+
+    if (!selectedModel) {
+      throw new Error(`Tu clave de API no tiene modelos de generación disponibles. Modelos encontrados: ${availableModels.length}`);
+    }
+
+    const modelName = selectedModel.name; // Ej: "models/gemini-1.5-flash"
+    const chatUrl = `https://generativelanguage.googleapis.com/v1/${modelName}:generateContent?key=${apiKey}`;
+
+    // 3. Proceder con el chat usando el modelo descubierto
+    const contents = [
+      { 
+        role: "user", 
+        parts: [{ text: `INSTRUCCIONES DE IDENTIDAD Y CONOCIMIENTO: ${SYSTEM_PROMPT}` }] 
+      },
+      { 
+        role: "model", 
+        parts: [{ text: "Entendido. Soy el Agente de La Unión Americana. He procesado el Proyecto Fundacional. ¿En qué puedo ayudarte?" }] 
+      },
+      ...history.map(h => ({
+        role: h.role === "model" ? "model" : "user",
+        parts: h.parts
+      })),
+      { role: "user", parts: [{ text: message }] }
+    ];
+
+    const response = await fetch(chatUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
