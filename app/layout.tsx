@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ChatAgent from "./components/ChatAgent";
 
 export default function RootLayout({
   children,
@@ -29,6 +30,7 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <ChatAgent />
       </body>
     </html>
   );

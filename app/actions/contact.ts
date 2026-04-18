@@ -19,8 +19,8 @@ export async function submitContact(prevState: ActionState | any, formData: Form
       return { error: 'Faltan campos obligatorios.', success: false };
     }
 
-    const insforgeUrl = process.env.VITE_INSFORGE_URL || process.env.INSFORGE_URL;
-    const insforgeKey = process.env.VITE_INSFORGE_ANON_KEY || process.env.INSFORGE_ANON_KEY;
+    const insforgeUrl = process.env.NEXT_PUBLIC_INSFORGE_URL || process.env.VITE_INSFORGE_URL || process.env.INSFORGE_URL;
+    const insforgeKey = process.env.NEXT_PUBLIC_INSFORGE_ANON_KEY || process.env.VITE_INSFORGE_ANON_KEY || process.env.INSFORGE_ANON_KEY;
 
     if (!insforgeUrl || !insforgeKey) {
       const missing = !insforgeUrl ? 'INSFORGE_URL' : 'INSFORGE_ANON_KEY';
