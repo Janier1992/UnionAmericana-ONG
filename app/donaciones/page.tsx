@@ -3,12 +3,12 @@
 import React, { useActionState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { submitContact } from '../actions/contact';
+import { submitContact, type ActionState } from '../actions/contact';
 
-const initialState: any = { success: false, message: '', error: '' };
+const initialState: ActionState = { success: false };
 
 export default function DonacionesPage() {
-  const [state, formAction, isPending] = useActionState<any, FormData>(submitContact, initialState);
+  const [state, formAction, isPending] = useActionState(submitContact, initialState);
 
   return (
     <>

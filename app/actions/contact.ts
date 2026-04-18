@@ -1,6 +1,12 @@
 'use server';
 
-export async function submitContact(prevState: any, formData: FormData) {
+export interface ActionState {
+  success: boolean;
+  message?: string;
+  error?: string;
+}
+
+export async function submitContact(prevState: ActionState | any, formData: FormData): Promise<ActionState> {
   try {
     const nombre = formData.get('nombre') as string;
     const email = formData.get('email') as string;

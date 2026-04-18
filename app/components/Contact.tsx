@@ -1,9 +1,9 @@
 'use client';
 
 import { useActionState } from 'react';
-import { submitContact } from '../actions/contact';
+import { submitContact, type ActionState } from '../actions/contact';
 
-const initialState: { success: boolean; message?: string; error?: string } = { success: false };
+const initialState: ActionState = { success: false };
 
 export default function Contact() {
   const [state, formAction, isPending] = useActionState(submitContact, initialState);
