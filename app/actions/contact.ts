@@ -23,8 +23,12 @@ export async function submitContact(prevState: ActionState | any, formData: Form
     const insforgeKey = process.env.VITE_INSFORGE_ANON_KEY || process.env.INSFORGE_ANON_KEY;
 
     if (!insforgeUrl || !insforgeKey) {
-      console.error('Error de configuración: Faltan las claves de Insforge en el archivo .env.local');
-      return { error: 'Error del servidor: Configuración incompleta.', success: false };
+      const missing = !insforgeUrl ? 'INSFORGE_URL' : 'INSFORGE_ANON_KEY';
+      console.error(`Error de configuración: Falta ${missing}`);
+      return { 
+        error: `Error del servidor: Configuración incompleta (Falta ${missing}). Por favor, realiza un Redeploy en Vercel.`, 
+        success: false 
+      };
     }
 
     // Rutear dinámicamente según el origen (voluntarios, donaciones, contactos)

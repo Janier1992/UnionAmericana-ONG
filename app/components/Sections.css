@@ -378,8 +378,8 @@ label {
 }
 .footer__grid {
   display: grid;
-  grid-template-columns: 2fr repeat(3, 1fr);
-  gap: var(--space-2xl);
+  grid-template-columns: 2fr repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-xl);
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -393,11 +393,14 @@ label {
 }
 .footer__links a {
   color: var(--color-text-muted);
+  transition: all var(--duration-fast);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .footer__links a:hover {
   color: var(--color-cyan);
   text-shadow: var(--shadow-cyan);
-  padding-left: 8px;
+  padding-left: 4px;
 }
 
 /* === NAV TOGGLE (MOBILE MENU ICON) === */
@@ -439,7 +442,8 @@ label {
   
   /* Footer */
   .footer__grid { 
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: 1fr 1fr; 
+    gap: var(--space-xl);
   }
 }
 
