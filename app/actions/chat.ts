@@ -2,7 +2,7 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const API_KEY = process.env.GEMINI_API_KEY;
+const API_KEY = process.env.GEMINI_API_KEY?.trim();
 const genAI = API_KEY ? new GoogleGenerativeAI(API_KEY) : null;
 
 const SYSTEM_PROMPT = `
@@ -40,34 +40,41 @@ export async function getChatResponse(message: string, history: { role: string; 
     return { error: "Configuración de IA incompleta (Falta GEMINI_API_KEY).", success: false };
   }
 
-  try {
-    const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash-latest",
-      systemInstruction: {
-        role: "system",
-        parts: [{ text: SYSTEM_PROMPT }]
-      }
-    });
+  // Intentar primero con flash 1.5, luego con pro 1.5 si falla
+  const modelsToTry = ["gemini-1.5-flash", "gemini-1.5-pro", "gemini-pro"];
+  let lastError = "";
 
-    const chat = model.startChat({
-      history: history.map(h => ({
-        role: h.role,
-        parts: h.parts
-      })),
-    });
+  for (const modelName of modelsToTry) {
+    try {
+      const model = genAI.getGenerativeModel({ 
+        model: modelName,
+        systemInstruction: {
+          role: "system",
+          parts: [{ text: SYSTEM_PROMPT }]
+        }
+      });
 
-    const result = await chat.sendMessage(message);
-    const response = await result.response;
-    const text = response.text();
+      const chat = model.startChat({
+        history: history.map(h => ({
+          role: h.role,
+          parts: h.parts
+        })),
+      });
 
-    return { text, success: true };
-  } catch (error: any) {
-    console.error("Error en Gemini API:", error);
-    // Extraer mensaje de error más descriptivo si está disponible
-    const errorMsg = error?.message || "Error interno";
-    return { 
-      error: `Error: ${errorMsg}. Por favor, verifica tu GEMINI_API_KEY.`, 
-      success: false 
-    };
+      const result = await chat.sendMessage(message);
+      const response = await result.response;
+      const text = response.text();
+
+      return { text, success: true };
+    } catch (error: any) {
+      console.error(`Fallo con modelo ${modelName}:`, error);
+      lastError = error?.message || "Error desconocido";
+      continue; // Probar el siguiente modelo
+    }
   }
+
+  return { 
+    error: `Error tras varios intentos: ${lastError}. Por favor, verifica que tu GEMINI_API_KEY sea correcta y tenga permisos.`, 
+    success: false 
+  };
 }
