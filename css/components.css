@@ -1,0 +1,308 @@
+/* === LOGO === */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  transition: opacity var(--duration-normal) var(--ease-out-expo);
+}
+
+.nav-logo img {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  transition: transform var(--duration-normal) var(--ease-out-expo);
+}
+
+.nav-logo:hover img {
+  transform: scale(1.02);
+}
+
+.navbar.scrolled .nav-logo {
+  filter: brightness(0.95);
+}
+
+/* === BOTONES EDITORIALES === */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 1rem 2.5rem;
+  font-family: var(--font-serif-display);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--radius-none);
+  transition: all var(--duration-normal) var(--ease-out-expo);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Botón primario - Oro sobre navy */
+.btn-primary {
+  background-color: var(--color-gold);
+  color: var(--color-navy);
+  border: 1px solid var(--color-gold);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-navy);
+  border-color: var(--color-navy);
+  color: var(--color-gold);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Botón secundario - Transparente con borde blanco (para hero oscuro) */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-white);
+  color: var(--color-navy);
+  border-color: var(--color-white);
+}
+
+/* Botón terciota - solo texto subrayado elegante */
+.btn-text {
+  padding: 0.75rem 0;
+  color: var(--color-navy);
+  border-bottom: 1px solid var(--color-terracotta);
+}
+
+.btn-text::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-gold);
+  transition: width var(--duration-normal) var(--ease-out-expo);
+}
+
+.btn-text:hover::after {
+  width: 100%;
+}
+
+/* === NAVBAR === */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color var(--duration-normal) var(--ease-out-expo),
+              padding var(--duration-normal) var(--ease-out-expo),
+              backdrop-filter var(--duration-normal) var(--ease-out-expo);
+}
+
+.navbar.scrolled {
+  background-color: rgba(13, 27, 42, 0.95);
+  backdrop-filter: blur(12px);
+  padding: var(--space-sm) var(--space-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.navbar.scrolled .nav-logo {
+  filter: brightness(0.95);
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  list-style: none;
+}
+
+.nav-link {
+  font-family: var(--font-serif-text);
+  font-size: var(--text-base);
+  color: var(--color-navy);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  position: relative;
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-gold);
+  transition: width var(--duration-normal) var(--ease-out-expo);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Botón donar en navbar */
+.nav-cta .btn {
+  padding: 0.75rem 1.5rem;
+  font-size: var(--text-xs);
+}
+
+/* Menú hamburguesa (mobile) */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-xs);
+}
+
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background-color: var(--color-navy);
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.navbar.scrolled .nav-toggle span {
+  background-color: var(--color-stone);
+}
+
+@media (max-width: 768px) {
+  .nav-toggle { display: flex; }
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-navy);
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-lg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-normal) var(--ease-out-expo);
+  }
+
+  .nav-menu.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .nav-menu .nav-link {
+    color: var(--color-stone);
+    font-size: var(--text-3xl);
+  }
+}
+
+/* === CARDS DE PROYECTOS === */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-none);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-subtle);
+  transition: transform var(--duration-slow) var(--ease-out-expo),
+              box-shadow var(--duration-slow) var(--ease-out-expo);
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-strong);
+}
+
+.project-card__image {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  position: relative;
+}
+
+.project-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-slower) var(--ease-out-expo);
+}
+
+.project-card:hover .project-card__image img {
+  transform: scale(1.05);
+}
+
+.project-card__content {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.project-card__category {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-terracotta);
+}
+
+.project-card__title {
+  font-family: var(--font-serif-display);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--color-navy);
+  line-height: 1.2;
+}
+
+.project-card__excerpt {
+  font-size: var(--text-base);
+  color: var(--color-charcoal);
+  line-height: var(--line-height-normal);
+}
+
+/* === ESTADÍSTICAS GRANDE === */
+.stat-large {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xs);
+}
+
+.stat-number {
+  font-family: var(--font-serif-display);
+  font-size: var(--text-display);
+  font-weight: 300;
+  color: var(--color-navy);
+  line-height: 0.9;
+}
+
+.stat-number strong {
+  font-weight: 700;
+  color: var(--color-terracotta);
+}
+
+.stat-label {
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-stone);
+}
+
+/* === SECTION DIVIDER === */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-stone),
+    transparent
+  );
+  margin: var(--space-3xl) auto;
+  max-width: 1200px;
+}

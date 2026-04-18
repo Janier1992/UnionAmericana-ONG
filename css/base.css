@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Source+Serif+4:wght@300;400;500;600;700&family=Libre+Franklin:wght@300;400;500;600;700;800;900&display=swap');
+
+@import url('https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js') layer(icons);
+
+/* === RESET EDITORIAL === */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-navy);
+  font-family: var(--font-sans-body);
+  font-size: var(--text-base);
+  line-height: var(--line-height-relaxed);
+  overflow-x: hidden;
+
+  /* Textura de papel/ruido sutil - genera con CSS */
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(232, 228, 223, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 30%, rgba(184, 134, 11, 0.03) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+}
+
+/* Optimización de imágenes */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Enlaces tipográficos */
+a {
+  color: var(--color-terracotta);
+  text-decoration: none;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color var(--duration-fast) var(--ease-out-quart);
+}
+
+a:hover {
+  color: var(--color-gold);
+}
+
+/* Botón base minimalista */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Selection con identidad de marca */
+::selection {
+  background-color: var(--color-terracotta);
+  color: var(--color-white);
+}
+
+/* Scrollbar minimalista */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-stone);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-navy);
+  border-radius: 2px;
+}
+
+/* Tipografía por jerarquía tipográfica global */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif-display);
+  color: var(--color-navy);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+h1 { font-size: var(--text-display); }
+h2 { font-size: var(--text-4xl); }
+h3 { font-size: var(--text-3xl); }
+h4 { font-size: var(--text-2xl); }
+h5 { font-size: var(--text-xl); }
+h6 { font-size: var(--text-lg); }
+
+p {
+  max-width: 70ch;
+  margin-bottom: var(--space-md);
+}
+
+.lead {
+  font-size: var(--text-xl);
+  line-height: var(--line-height-relaxed);
+  font-weight: 300;
+}
+
+.overline {
+  font-size: var(--text-overline);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-gold);
+  margin-bottom: var(--space-sm);
+}
+
+.text-terracotta { color: var(--color-terracotta); }
+.text-gold { color: var(--color-gold); }
+.text-navy { color: var(--color-navy); }
+.text-stone { color: var(--color-stone); }
+
+.bg-navy { background-color: var(--color-navy); }
+.bg-terracotta { background-color: var(--color-terracotta); color: var(--color-white); }
+.bg-gold { background-color: var(--color-gold); color: var(--color-white); }
+.bg-stone { background-color: var(--color-stone); }
+.bg-cream { background-color: var(--color-cream); }
+
+/* Clases utilitarias para grids editoriales */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-md);
+}
+
+.col-span-5 { grid-column: span 5; }
+.col-span-7 { grid-column: span 7; }
+.col-span-4 { grid-column: span 4; }
+.col-span-8 { grid-column: span 8; }
+.col-span-12 { grid-column: span 12; }
+
+@media (max-width: 1024px) {
+  .col-span-5, .col-span-7 { grid-column: span 12; }
+}
+
+/* Centrado clásico editorial */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: var(--space-lg);
+}
+
+.section {
+  padding-block: var(--space-3xl);
+}
+
+@media (max-width: 768px) {
+  .section { padding-block: var(--space-2xl); }
+}

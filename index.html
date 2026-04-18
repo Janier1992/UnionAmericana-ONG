@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Unión Americana — Una sola fuerza. Cien naciones. Un solo corazón.</title>
+  <meta name="description" content="ONG panlatinamericana fundada en 2026. Construimos oportunidades de dignidad, unidad y progreso para los pueblos de América Latina y el Caribe.">
+  <meta property="og:title" content="La Unión Americana">
+  <meta property="og:description" content="Una sola fuerza. Cien naciones. Un solo corazón.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230A2647' stroke='%231B7A4A' stroke-width='2'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-size='14' font-weight='bold' fill='white' font-family='serif'%3EUA%3C/text%3E%3C/svg%3E">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Libre+Franklin:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============================================
+     NAVBAR
+     ============================================ -->
+<nav class="navbar" id="navbar">
+  <a href="#inicio" class="nav-logo">
+    <img src="public/Unionamreicana.jpeg" alt="La Unión Americana — Logo">
+  </a>
+  <ul class="nav-menu" id="nav-menu">
+    <li><a href="#inicio" class="nav-link">Inicio</a></li>
+    <li><a href="#manifiesto" class="nav-link">Manifiesto</a></li>
+    <li><a href="#pilares" class="nav-link">Pilares</a></li>
+    <li><a href="#impacto" class="nav-link">Impacto</a></li>
+    <li><a href="#roadmap" class="nav-link">Hoja de Ruta</a></li>
+    <li><a href="#talento" class="nav-link">Talento</a></li>
+    <li class="nav-cta">
+      <a href="#unete" class="btn btn-primary">Súmate</a>
+    </li>
+  </ul>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ============================================
+     HERO
+     ============================================ -->
+<section class="hero" id="inicio">
+  <div class="hero__bg-effects"></div>
+  <div class="hero__noise"></div>
+
+  <!-- Mapa SVG decorativo de América Latina -->
+  <div class="hero__map-bg" id="hero-map">
+    <svg viewBox="0 0 600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="rgba(255,255,255,0.3)" stroke-width="0.8" fill="none">
+        <!-- México y Centroamérica -->
+        <path d="M150 80 C170 75,200 80,220 100 C240 120,260 140,250 170 C240 200,220 210,200 230 C180 250,170 270,180 290 C190 310,210 300,220 310 C230 320,220 340,200 350"/>
+        <!-- Colombia -->
+        <path d="M200 350 C210 360,230 370,240 390 C250 410,260 430,250 460 C240 490,220 510,200 520 C180 530,160 520,150 500 C140 480,150 460,170 440 C190 420,200 400,190 380 C180 360,190 350,200 350Z" fill="rgba(27,122,74,0.1)"/>
+        <!-- Venezuela -->
+        <path d="M240 340 C270 330,300 340,320 360 C340 380,330 400,310 410 C290 420,260 430,250 410 C240 390,230 370,240 340Z" fill="rgba(27,122,74,0.08)"/>
+        <!-- Ecuador -->
+        <path d="M150 500 C160 490,170 480,180 490 C190 500,180 520,170 530 C160 540,140 530,140 520 C140 510,150 500,150 500Z" fill="rgba(27,122,74,0.08)"/>
+        <!-- Perú -->
+        <path d="M170 530 C180 540,190 560,185 590 C180 620,170 650,160 680 C150 700,130 710,120 690 C110 670,120 640,130 610 C140 580,150 550,170 530Z"/>
+        <!-- Brasil -->
+        <path d="M310 410 C340 420,370 440,400 470 C430 500,450 540,460 580 C470 620,460 660,440 700 C420 740,390 770,360 790 C330 810,300 800,280 780 C260 760,250 730,260 700 C270 670,280 640,270 610 C260 580,250 550,260 520 C270 490,290 470,310 450 C320 440,310 420,310 410Z"/>
+        <!-- Argentina y Chile -->
+        <path d="M260 780 C270 800,260 830,250 860 C240 890,230 920,220 950 C210 970,200 980,190 970 C180 960,175 940,180 920 C185 900,190 880,185 860"/>
+        <path d="M160 680 C155 720,150 760,145 800 C140 840,135 880,130 920 C125 950,120 970,115 960"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero__content">
+    <div class="hero__badge">
+      <span class="dot"></span>
+      Fundada en 2026 · ONG Panlatinamericana
+    </div>
+
+    <h1 class="hero__title">
+      Una sola fuerza.<br>
+      Cien naciones.<br>
+      Un solo <span class="gold">corazón</span>.
+    </h1>
+
+    <p class="hero__subtitle">
+      La Unión Americana es la ONG panlatinamericana que construye oportunidades
+      para que nuestra gente no tenga que irse.
+    </p>
+
+    <div class="hero__cta">
+      <a href="#manifiesto" class="btn btn-gold">Conoce nuestra misión</a>
+      <a href="#unete" class="btn btn-secondary">Quiero participar</a>
+    </div>
+
+    <div class="hero__stat-chip">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      650+ millones de latinoamericanos. Un destino compartido.
+    </div>
+  </div>
+
+  <div class="hero__scroll">
+    <span>SCROLL</span>
+    <div class="hero__scroll-line"></div>
+  </div>
+</section>
+
+<!-- ============================================
+     MANIFIESTO
+     ============================================ -->
+<section class="section manifiesto" id="manifiesto">
+  <div class="manifiesto__pattern"></div>
+  <div class="container manifiesto__inner">
+    <p class="overline reveal">Nuestra Visión</p>
+
+    <blockquote class="manifiesto__quote reveal reveal--delay-1">
+      "América Latina no necesita el sueño americano. América Latina necesita despertar
+      su propio sueño. Y ese sueño se llama unidad, dignidad y oportunidad para todos."
+    </blockquote>
+
+    <div class="manifiesto__columns reveal reveal--delay-2">
+      <div class="manifiesto__col dark">
+        <p style="margin:0">América Latina concentra el <strong>8% de la población mundial</strong> pero el
+        <strong>33% de los homicidios</strong> del planeta. La región más desigual del mundo.
+        <strong>40 millones</strong> de personas en pobreza extrema. <strong>26 millones</strong>
+        de migrantes forzados.</p>
+      </div>
+      <div class="manifiesto__col light">
+        <p style="margin:0">Pero también tiene el <strong>mayor pulmón verde</strong> del planeta,
+        la segunda mayor reserva de <strong>agua dulce</strong>, la mayor <strong>biodiversidad</strong>
+        del mundo, y una generación joven que ya no acepta el statu quo.</p>
+      </div>
+    </div>
+
+    <p class="manifiesto__closing reveal reveal--delay-3">
+      Lo que ha faltado no es el talento ni los recursos:<br>
+      ha faltado la <em>unidad</em>. La Unión Americana es la respuesta.
+    </p>
+
+    <div class="compromisos-grid">
+      <div class="compromiso-card reveal">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <p>Nunca olvidar que detrás de cada estadística hay una persona con nombre, historia y sueños.</p>
+      </div>
+      <div class="compromiso-card reveal reveal--delay-1">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <p>Actuar con transparencia, integridad y rendición de cuentas.</p>
+      </div>
+      <div class="compromiso-card reveal reveal--delay-2">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <p>Escuchar a las comunidades antes de decidir — ellas son las expertas en su propia realidad.</p>
+      </div>
+      <div class="compromiso-card reveal reveal--delay-3">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p>Construir desde la identidad y el orgullo latinoamericano, no desde la dependencia.</p>
+      </div>
+      <div class="compromiso-card reveal reveal--delay-4">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <p>Conectar a los latinoamericanos entre sí, porque nuestra mayor fortaleza es la red que formamos juntos.</p>
+      </div>
+      <div class="compromiso-card reveal reveal--delay-5">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <p>Medir el éxito no por la ayuda dada, sino por las personas que ya no la necesitan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     PILARES
+     ============================================ -->
+<section class="section pilares" id="pilares">
+  <div class="container">
+    <div class="pilares__header reveal">
+      <p class="overline">Nuestros Pilares</p>
+      <h2>Cuatro ejes de<br><em>intervención</em></h2>
+    </div>
+
+    <div class="pilares__grid">
+      <div class="pilar-card pilar-card--1 reveal" data-num="01">
+        <div class="pilar-card__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3 class="pilar-card__title">Asistencia Humanitaria Directa</h3>
+        <p class="pilar-card__desc">Respuesta inmediata a crisis, emergencias y necesidades básicas de las comunidades más vulnerables.</p>
+        <ul class="pilar-card__actions">
+          <li>Distribución de alimentos y agua potable</li>
+          <li>Refugios temporales de emergencia</li>
+          <li>Atención médica de primera respuesta</li>
+        </ul>
+        <a href="#" class="pilar-card__link">Saber más →</a>
+      </div>
+
+      <div class="pilar-card pilar-card--2 reveal reveal--delay-1" data-num="02">
+        <div class="pilar-card__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3 class="pilar-card__title">Servicios Esenciales</h3>
+        <p class="pilar-card__desc">Donde el Estado está ausente, nosotros llegamos con salud, educación y oportunidades reales.</p>
+        <ul class="pilar-card__actions">
+          <li>Clínicas móviles de salud comunitaria</li>
+          <li>Becas y escuelas de oficios</li>
+          <li>Programas deportivos juveniles</li>
+        </ul>
+        <a href="#" class="pilar-card__link">Saber más →</a>
+      </div>
+
+      <div class="pilar-card pilar-card--3 reveal reveal--delay-2" data-num="03">
+        <div class="pilar-card__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M7 10.5c0-1.5 1-3 3-3s3 1.5 3 3c0 2-3 3-3 5"/><circle cx="10" cy="18" r=".5"/></svg>
+        </div>
+        <h3 class="pilar-card__title">Desarrollo Comunitario</h3>
+        <p class="pilar-card__desc">Identificamos talento local y creamos ecosistemas económicos regionales sostenibles.</p>
+        <ul class="pilar-card__actions">
+          <li>Biofactorías: aguas residuales a biogás</li>
+          <li>Cooperativas económicas regionales</li>
+          <li>Plataforma de talentos latinoamericanos</li>
+        </ul>
+        <a href="#" class="pilar-card__link">Saber más →</a>
+      </div>
+
+      <div class="pilar-card pilar-card--4 reveal reveal--delay-3" data-num="04">
+        <div class="pilar-card__icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="pilar-card__title">Derechos Humanos</h3>
+        <p class="pilar-card__desc">Protección de migrantes, incidencia política e integración regional latinoamericana.</p>
+        <ul class="pilar-card__actions">
+          <li>Protección de migrantes en el exterior</li>
+          <li>Incidencia en políticas públicas</li>
+          <li>Integración regional ALC</li>
+        </ul>
+        <a href="#" class="pilar-card__link">Saber más →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     IMPACTO
+     ============================================ -->
+<section class="section impacto" id="impacto">
+  <div class="impacto__noise"></div>
+  <div class="container impacto__inner">
+    <div class="impacto__header reveal">
+      <p class="overline">Nuestro Alcance Proyectado</p>
+      <h2>Transformación<br><em style="color:var(--color-verde-light)">tangible</em></h2>
+    </div>
+
+    <!-- Contadores -->
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-number" data-value="650" data-suffix="M">0</div>
+        <div class="stat-label">Latinoamericanos al alcance</div>
+      </div>
+      <div class="stat-item reveal reveal--delay-1">
+        <div class="stat-number" data-value="20">0</div>
+        <div class="stat-label">Países Objetivo</div>
+      </div>
+      <div class="stat-item reveal reveal--delay-2">
+        <div class="stat-number" data-value="500">0</div>
+        <div class="stat-label">Jóvenes Talentos Piloto</div>
+      </div>
+      <div class="stat-item reveal reveal--delay-3">
+        <div class="stat-number" data-value="10000" data-suffix="">0</div>
+        <div class="stat-label">Usuarios Plataforma (Año 3)</div>
+      </div>
+      <div class="stat-item reveal reveal--delay-4">
+        <div class="stat-number" data-value="30" data-suffix="%">0</div>
+        <div class="stat-label">Reducción Intención Migrar</div>
+      </div>
+    </div>
+
+    <!-- Mapa Interactivo -->
+    <div class="map-section reveal">
+      <div class="map-container" id="map-container">
+        <svg id="latam-map" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg">
+          <!-- México -->
+          <path class="country" d="M80 50 L150 40 L170 60 L180 100 L160 130 L140 150 L120 140 L100 160 L80 150 L60 120 L70 80Z"/>
+          <!-- Guatemala, Honduras, etc -->
+          <path class="country" d="M120 140 L140 150 L150 160 L145 175 L130 180 L115 170 L110 155Z"/>
+          <path class="country" d="M145 175 L160 170 L175 180 L170 195 L155 200 L140 190Z"/>
+          <!-- Colombia -->
+          <path class="country active" data-country="Colombia" d="M150 240 L180 225 L210 230 L230 260 L225 300 L210 330 L180 340 L160 320 L140 290 L135 260Z"/>
+          <!-- Venezuela -->
+          <path class="country active" data-country="Venezuela" d="M210 220 L250 200 L290 210 L300 240 L280 260 L250 270 L230 260 L210 230Z"/>
+          <!-- Ecuador -->
+          <path class="country active" data-country="Ecuador" d="M130 320 L160 310 L170 330 L165 355 L145 365 L125 350Z"/>
+          <!-- Perú -->
+          <path class="country" d="M125 350 L145 365 L165 355 L175 380 L170 430 L150 460 L120 450 L105 420 L110 380Z"/>
+          <!-- Brasil -->
+          <path class="country" d="M230 260 L280 260 L320 280 L370 310 L400 360 L410 420 L390 480 L350 520 L310 540 L270 530 L240 500 L230 460 L220 420 L215 380 L210 340 L220 300Z"/>
+          <!-- Bolivia -->
+          <path class="country" d="M210 400 L230 390 L250 410 L245 450 L220 460 L200 440Z"/>
+          <!-- Paraguay -->
+          <path class="country" d="M260 450 L290 440 L300 470 L280 490 L260 480Z"/>
+          <!-- Uruguay -->
+          <path class="country" d="M300 500 L320 490 L325 520 L310 535 L295 525Z"/>
+          <!-- Argentina -->
+          <path class="country" d="M220 470 L260 480 L280 500 L290 540 L280 590 L260 630 L240 660 L220 670 L210 650 L200 610 L205 560 L210 520Z"/>
+          <!-- Chile -->
+          <path class="country" d="M195 450 L210 440 L215 480 L210 530 L205 580 L200 630 L190 660 L180 650 L185 600 L190 540 L193 480Z"/>
+
+          <!-- Puntos pulsantes para países piloto -->
+          <circle class="pulse-point" cx="185" cy="280" r="4" fill="#2D9F5E" data-label="Colombia — Fase 1"/>
+          <circle class="pulse-point" cx="260" cy="235" r="4" fill="#2D9F5E" data-label="Venezuela — Fase 1" style="animation-delay:0.5s"/>
+          <circle class="pulse-point" cx="148" cy="340" r="4" fill="#2D9F5E" data-label="Ecuador — Fase 1" style="animation-delay:1s"/>
+        </svg>
+        <div class="map-tooltip" id="map-tooltip"></div>
+      </div>
+
+      <div class="map-info">
+        <p class="overline" style="color:var(--color-verde-light)">Cobertura Regional</p>
+        <h3>Presencia en<br>América Latina</h3>
+        <p>Nuestra primera fase de operación se centra en tres países piloto,
+        con planes de expansión a 20 naciones para el año 2040.</p>
+        <div class="map-legend">
+          <div class="legend-item"><span class="legend-dot legend-dot--active"></span> Países piloto activos</div>
+          <div class="legend-item"><span class="legend-dot legend-dot--planned"></span> Expansión planificada</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ODS Badges -->
+    <div class="ods-section reveal">
+      <h4>Objetivos de Desarrollo Sostenible Alineados</h4>
+      <div class="ods-grid">
+        <div class="ods-badge" style="background:#E5243B" title="ODS 1: Fin de la Pobreza">1</div>
+        <div class="ods-badge" style="background:#DDA63A" title="ODS 2: Hambre Cero">2</div>
+        <div class="ods-badge" style="background:#4C9F38" title="ODS 3: Salud y Bienestar">3</div>
+        <div class="ods-badge" style="background:#C5192D" title="ODS 4: Educación de Calidad">4</div>
+        <div class="ods-badge" style="background:#FF3A21" title="ODS 5: Igualdad de Género">5</div>
+        <div class="ods-badge" style="background:#26BDE2" title="ODS 6: Agua Limpia">6</div>
+        <div class="ods-badge" style="background:#DD1367" title="ODS 10: Reducción de Desigualdades">10</div>
+        <div class="ods-badge" style="background:#19486A" title="ODS 17: Alianzas">17</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     HOJA DE RUTA
+     ============================================ -->
+<section class="section roadmap" id="roadmap">
+  <div class="container">
+    <div class="roadmap__header reveal">
+      <p class="overline">Hoja de Ruta</p>
+      <h2>Cuatro fases hacia<br><em>la transformación</em></h2>
+    </div>
+
+    <div class="timeline">
+      <!-- Fase I -->
+      <div class="timeline-item reveal">
+        <div class="timeline-node timeline-node--active">I</div>
+        <div class="timeline-card">
+          <h4>Fase 1: Fundación</h4>
+          <span class="period">Meses 1 – 12</span>
+          <ul>
+            <li>→ Registro legal en 3+ países</li>
+            <li>→ Equipo fundador multidisciplinario</li>
+            <li>→ Primer financiamiento institucional</li>
+            <li>→ Alianzas estratégicas iniciales</li>
+          </ul>
+          <div class="success">✓ Meta: Operación legal en Colombia, Venezuela y Ecuador</div>
+        </div>
+      </div>
+
+      <!-- Fase II -->
+      <div class="timeline-item timeline-item--future reveal reveal--delay-1">
+        <div class="timeline-node timeline-node--future">II</div>
+        <div class="timeline-card">
+          <h4>Fase 2: Piloto</h4>
+          <span class="period">Meses 13 – 36</span>
+          <ul>
+            <li>→ Primera Biofactoría operativa</li>
+            <li>→ 500 jóvenes talentos acompañados</li>
+            <li>→ 3 clínicas móviles desplegadas</li>
+            <li>→ Plataforma digital de talento v1.0</li>
+          </ul>
+          <div class="success">✓ Meta: Comunidades piloto autosostenibles</div>
+        </div>
+      </div>
+
+      <!-- Fase III -->
+      <div class="timeline-item timeline-item--future reveal reveal--delay-2">
+        <div class="timeline-node timeline-node--future">III</div>
+        <div class="timeline-card">
+          <h4>Fase 3: Expansión</h4>
+          <span class="period">Meses 37 – 72</span>
+          <ul>
+            <li>→ Presencia en 8+ países de ALC</li>
+            <li>→ 10,000+ usuarios en plataforma de talentos</li>
+            <li>→ Red de 50+ organizaciones aliadas</li>
+            <li>→ Modelo replicable documentado</li>
+          </ul>
+          <div class="success">✓ Meta: Escala regional consolidada</div>
+        </div>
+      </div>
+
+      <!-- Fase IV -->
+      <div class="timeline-item timeline-item--future reveal reveal--delay-3">
+        <div class="timeline-node timeline-node--future">IV</div>
+        <div class="timeline-card">
+          <h4>Fase 4: Transformación</h4>
+          <span class="period">Años 7 – 15 (hasta 2040)</span>
+          <ul>
+            <li>→ 20+ comunidades autosostenibles</li>
+            <li>→ Reducción del 30% en intención de migrar</li>
+            <li>→ Hub tecnológico latinoamericano</li>
+            <li>→ Modelo reconocido por organismos internacionales</li>
+          </ul>
+          <div class="success">✓ Meta: Transformación continental verificable</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     TALENTO
+     ============================================ -->
+<section class="section talento" id="talento">
+  <div class="container">
+    <div class="talento__grid">
+      <div class="talento__text reveal">
+        <p class="overline">Plataforma de Talento</p>
+        <h2>América Latina tiene el talento.<br>Nosotros construimos el <em>puente</em>.</h2>
+        <p>Plataforma digital de identificación, conexión y desarrollo del talento
+        latinoamericano — para que el cerebro de la región se quede en la región.</p>
+
+        <div class="talento__props">
+          <div class="prop-item">
+            <div class="num">1</div>
+            <p><strong>Descubrimos</strong> talentos en territorios invisibles</p>
+          </div>
+          <div class="prop-item">
+            <div class="num">2</div>
+            <p><strong>Conectamos</strong> talentos con oportunidades dentro de ALC</p>
+          </div>
+          <div class="prop-item">
+            <div class="num">3</div>
+            <p><strong>Acompañamos</strong> con mentorías y financiamiento</p>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:var(--sp-sm);flex-wrap:wrap">
+          <a href="#unete" class="btn btn-primary">Registra tu talento</a>
+          <a href="#unete" class="btn btn-outline">Soy organización aliada</a>
+        </div>
+      </div>
+
+      <div class="talento__mockup reveal reveal--delay-2">
+        <div class="talent-cards">
+          <div class="talent-card">
+            <div class="talent-card__flag">🇨🇴</div>
+            <div class="talent-card__name">Valentina Reyes</div>
+            <div class="talent-card__country">Colombia</div>
+            <span class="talent-card__skill">Ingeniería Ambiental</span>
+          </div>
+          <div class="talent-card">
+            <div class="talent-card__flag">🇻🇪</div>
+            <div class="talent-card__name">Andrés Machado</div>
+            <div class="talent-card__country">Venezuela</div>
+            <span class="talent-card__skill">Desarrollo de Software</span>
+          </div>
+          <div class="talent-card">
+            <div class="talent-card__flag">🇪🇨</div>
+            <div class="talent-card__name">María Quishpe</div>
+            <div class="talent-card__country">Ecuador</div>
+            <span class="talent-card__skill">Agronomía Sostenible</span>
+          </div>
+          <div class="talent-card">
+            <div class="talent-card__flag">🇵🇪</div>
+            <div class="talent-card__name">Carlos Huamán</div>
+            <div class="talent-card__country">Perú</div>
+            <span class="talent-card__skill">Arte y Música</span>
+          </div>
+          <div class="talent-card">
+            <div class="talent-card__flag">🇧🇷</div>
+            <div class="talent-card__name">Letícia Santos</div>
+            <div class="talent-card__country">Brasil</div>
+            <span class="talent-card__skill">Biotecnología</span>
+          </div>
+          <div class="talent-card">
+            <div class="talent-card__flag">🇦🇷</div>
+            <div class="talent-card__name">Facundo López</div>
+            <div class="talent-card__country">Argentina</div>
+            <span class="talent-card__skill">Energías Renovables</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================
+     ÚNETE
+     ============================================ -->
+<section class="section unete" id="unete">
+  <div class="container">
+    <div class="unete__header reveal">
+      <p class="overline">Sé Parte del Cambio</p>
+      <h2>La historia comienza<br><em>contigo</em></h2>
+    </div>
+
+    <div class="vias-grid">
+      <div class="via-card reveal">
+        <div class="via-card__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h4>Voluntario</h4>
+        <p>Aporta tu tiempo y habilidades desde donde estés. Cada mano cuenta en esta construcción continental.</p>
+        <a href="#contact-form" class="btn btn-primary" style="width:100%">Quiero ser voluntario</a>
+      </div>
+
+      <div class="via-card reveal reveal--delay-1">
+        <div class="via-card__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h4>Organización Aliada</h4>
+        <p>Construimos juntos. Tu organización puede ser parte de la red panlatinamericana más ambiciosa.</p>
+        <a href="#contact-form" class="btn btn-outline" style="width:100%">Explorar alianza</a>
+      </div>
+
+      <div class="via-card reveal reveal--delay-2">
+        <div class="via-card__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h4>Donante</h4>
+        <p>Tu apoyo financia comunidades enteras. Transparencia total en cada peso invertido.</p>
+        <a href="#contact-form" class="btn btn-gold" style="width:100%">Apoyar el proyecto</a>
+      </div>
+    </div>
+
+    <!-- Formulario -->
+    <div class="form-section reveal" id="contact-form">
+      <h3>Contáctanos</h3>
+      <form id="unete-form" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="nombre">Nombre completo *</label>
+            <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+            <span class="error-msg">Por favor ingresa tu nombre</span>
+          </div>
+          <div class="form-group">
+            <label for="email">Correo electrónico *</label>
+            <input type="email" id="email" name="email" required placeholder="correo@ejemplo.com">
+            <span class="error-msg">Ingresa un correo válido</span>
+          </div>
+          <div class="form-group">
+            <label for="tipo">Tipo de participación *</label>
+            <select id="tipo" name="tipo" required>
+              <option value="">Seleccionar...</option>
+              <option value="voluntario">Voluntario</option>
+              <option value="aliado">Organización Aliada</option>
+              <option value="donante">Donante</option>
+              <option value="otro">Otro</option>
+            </select>
+            <span class="error-msg">Selecciona una opción</span>
+          </div>
+          <div class="form-group">
+            <label for="pais">País</label>
+            <input type="text" id="pais" name="pais" placeholder="Tu país">
+          </div>
+          <div class="form-group full">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos cómo te gustaría participar..."></textarea>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+          </div>
+        </div>
+      </form>
+      <p class="form-trust">
+        🔒 La Unión Americana opera con estándares internacionales de transparencia y rendición de cuentas.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="footer">
+  <div class="footer__grid">
+    <div class="footer__brand">
+      <img src="public/Unionamreicana.jpeg" alt="La Unión Americana">
+      <p>Organización dedicada a la dignidad, unidad y progreso de los pueblos latinoamericanos desde 2026.</p>
+      <div class="footer__social">
+        <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" aria-label="Twitter/X"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 12 8v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5 0-.28-.03-.56-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></a>
+      </div>
+    </div>
+
+    <div class="footer__links">
+      <h5>Navegación</h5>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#manifiesto">Manifiesto</a></li>
+        <li><a href="#pilares">Pilares</a></li>
+        <li><a href="#impacto">Impacto</a></li>
+        <li><a href="#roadmap">Hoja de Ruta</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__links">
+      <h5>Pilares</h5>
+      <ul>
+        <li><a href="#pilares">Asistencia Humanitaria</a></li>
+        <li><a href="#pilares">Servicios Esenciales</a></li>
+        <li><a href="#pilares">Desarrollo Comunitario</a></li>
+        <li><a href="#pilares">Derechos Humanos</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__links">
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="#">Política de Privacidad</a></li>
+        <li><a href="#">Términos de Uso</a></li>
+        <li><a href="#">Transparencia</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="footer__disclaimer">
+    Una ONG panlatinamericana. No estamos afiliados a ningún partido político ni gobierno.
+  </p>
+
+  <div class="footer__bottom">
+    <span>© 2026 La Unión Americana. Todos los derechos reservados.</span>
+    <span>Unidad, Dignidad y Desarrollo — América Latina y el Caribe</span>
+  </div>
+</footer>
+
+<!-- ============================================
+     SCRIPTS
+     ============================================ -->
+<script src="script.js"></script>
+
+</body>
+</html>
