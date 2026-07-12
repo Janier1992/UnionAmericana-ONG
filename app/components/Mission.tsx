@@ -34,7 +34,16 @@ export default function Mission() {
             variants={textVariants}
           >
             <p className="overline">Misión y Visión 2040</p>
-            <h2>Unidad para<br /><em>cada pueblo</em></h2>
+            <h2 style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', lineHeight: 1.15, marginBottom: '1.5rem' }}>
+              Unidad para<br />
+              <span style={{ 
+                background: 'linear-gradient(90deg, var(--color-cyan), var(--color-violet))',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                fontStyle: 'italic',
+                fontWeight: 700
+              }}>cada pueblo</span>
+            </h2>
 
             <p style={{ fontSize: '1.125rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>
               <span className="mision__dropcap">Misión:</span> Promover la unidad, el desarrollo integral y 

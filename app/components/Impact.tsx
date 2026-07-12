@@ -78,7 +78,16 @@ export default function Impact() {
             viewport={{ once: true, margin: "-50px" }}
           >
             <p className="overline">Hacia el Futuro</p>
-            <h2>Proyecciones<br /><em>2040</em></h2>
+            <h2 style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', lineHeight: 1.15, marginBottom: '1.5rem' }}>
+              Proyecciones<br />
+              <span style={{ 
+                background: 'linear-gradient(90deg, var(--color-cyan), var(--color-violet))',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                fontStyle: 'italic',
+                fontWeight: 700
+              }}>2040</span>
+            </h2>
             <p style={{ marginTop: '1rem', color: 'rgba(255,255,255,0.7)', maxWidth: '600px' }}>
               No mediremos nuestro éxito por la cantidad de ayuda que damos, sino por la cantidad de comunidades que ya no la necesiten. Estas son nuestras proyecciones para transformar el continente.
             </p>

@@ -56,13 +56,15 @@ export default function Hero() {
         initial="hidden"
         animate="show"
       >
-        <motion.div className="hero__overline" variants={itemVariants}>
-          <span className="overline">Fundada en 2026</span>
-        </motion.div>
-        
-        <motion.h1 className="hero__title" variants={itemVariants}>
+        <motion.h1 className="hero__title" variants={itemVariants} style={{ fontSize: 'clamp(2.5rem, 6.5vw, 5.2rem)', lineHeight: 1.05, textShadow: '0 0 30px rgba(0, 240, 255, 0.15)' }}>
           La Unión<br />
-          <em>Americana</em>
+          <span style={{ 
+            background: 'linear-gradient(90deg, var(--color-cyan), var(--color-violet))',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontStyle: 'italic',
+            fontWeight: 800
+          }}>Americana</span>
         </motion.h1>
         
         <motion.p className="hero__subtitle" variants={itemVariants}>

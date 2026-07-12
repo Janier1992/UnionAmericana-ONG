@@ -18,10 +18,19 @@ export default function Footer() {
             fontSize: 'var(--text-sm)',
             color: 'var(--color-stone)',
             opacity: 0.7,
-            maxWidth: '300px'
+            maxWidth: '300px',
+            marginBottom: '10px'
           }}>
             Organización dedicada a la dignidad, unidad y progreso de los pueblos latinoamericanos desde 2026.
           </p>
+          <a href="mailto:gerencia@launionamericana.org" style={{
+            fontSize: 'var(--text-sm)',
+            color: 'var(--color-cyan)',
+            fontWeight: 600,
+            textDecoration: 'none'
+          }}>
+            gerencia@launionamericana.org
+          </a>
         </div>
 
         <div className="footer__links">
@@ -31,6 +40,7 @@ export default function Footer() {
             <li><a href="/#mision">Misión</a></li>
             <li><a href="/#pilares">Modelo Integrado</a></li>
             <li><a href="/#impacto">Proyecciones</a></li>
+            <li><a href="/admin" style={{ color: 'var(--color-cyan)', fontWeight: 600 }}>Portal CRM</a></li>
           </ul>
         </div>
 

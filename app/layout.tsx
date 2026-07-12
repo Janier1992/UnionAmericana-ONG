@@ -15,9 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import ChatAgent from "./components/ChatAgent";
+import LayoutWrapper from "./components/LayoutWrapper";
 
 export default function RootLayout({
   children,
@@ -27,10 +25,7 @@ export default function RootLayout({
   return (
     <html lang="es" className="h-full">
       <body className="min-h-full">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <ChatAgent />
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );
