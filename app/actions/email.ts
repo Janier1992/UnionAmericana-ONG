@@ -1,7 +1,5 @@
 "use server";
 
-import fs from 'fs/promises';
-import path from 'path';
 import { Resend } from 'resend';
 
 // ─── RESEND CLIENT ─────────────────────────────────────────────────────
@@ -27,7 +25,11 @@ export interface EmailContactData {
   mensaje?: string;
 }
 
-const LOG_FILE_PATH = path.join(process.cwd(), 'public', 'email_logs.json');
+// ─── IN-MEMORY LOG (compatible con entornos serverless como Hostinger) ────────
+// Nota: En serverless el sistema de archivos es de solo lectura, por lo que
+// los logs se mantienen en memoria durante la sesión del proceso y NO persisten
+// entre reinicios. Para persistencia real, usa una base de datos (InsForge/Supabase).
+let inMemoryLogs: EmailLog[] = [];
 
 // ─── BRANDING CONSTANTS ────────────────────────────────────────────────
 const LOGO_URL = 'https://launionamericana.org/logo_oficial_ua.jpg';
@@ -47,22 +49,13 @@ const BRAND = {
   senderEmail: 'gerencia@launionamericana.org',
 };
 
-// ─── HELPER: READ/WRITE LOG ────────────────────────────────────────────
+// ─── HELPER: READ/WRITE LOG (IN-MEMORY) ───────────────────────────────
 export async function getEmailLogs(): Promise<EmailLog[]> {
-  try {
-    await fs.access(LOG_FILE_PATH);
-    const data = await fs.readFile(LOG_FILE_PATH, 'utf-8');
-    return JSON.parse(data) as EmailLog[];
-  } catch (error) {
-    await fs.mkdir(path.dirname(LOG_FILE_PATH), { recursive: true }).catch(() => {});
-    await fs.writeFile(LOG_FILE_PATH, JSON.stringify([], null, 2), 'utf-8');
-    return [];
-  }
+  return inMemoryLogs;
 }
 
 export async function logEmail(email: Omit<EmailLog, 'id' | 'date' | 'from'>): Promise<boolean> {
   try {
-    const logs = await getEmailLogs();
     const newLog: EmailLog = {
       ...email,
       id: Math.random().toString(36).substring(2, 9).toUpperCase(),
@@ -70,8 +63,11 @@ export async function logEmail(email: Omit<EmailLog, 'id' | 'date' | 'from'>): P
       date: new Date().toISOString()
     };
     
-    logs.unshift(newLog);
-    await fs.writeFile(LOG_FILE_PATH, JSON.stringify(logs, null, 2), 'utf-8');
+    inMemoryLogs.unshift(newLog);
+    // Limitar a los últimos 100 logs para no consumir memoria indefinidamente
+    if (inMemoryLogs.length > 100) {
+      inMemoryLogs = inMemoryLogs.slice(0, 100);
+    }
     
     console.log(`📋 [Log] Registrado correo para: ${newLog.to} | Asunto: ${newLog.subject}`);
     return true;
