@@ -39,14 +39,14 @@ export default function DonacionesPage() {
               
               <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', marginBottom: '1.5rem' }}>
                 <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'rgba(255,255,255,0.5)' }}>Cuenta Bancaria Institucional (Colombia - Nodo Sur)</p>
-                <p style={{ margin: '0 0 0.25rem 0', fontWeight: 'bold' }}>Banco de Bogotá</p>
-                <p style={{ margin: '0 0 0.25rem 0', fontFamily: 'monospace', fontSize: '1.1rem', color: 'var(--color-cyan)' }}>Cuenta Corriente: 123-45678-9</p>
+                <p style={{ margin: '0 0 0.25rem 0', fontWeight: 'bold' }}>Bancolombia</p>
+                <p style={{ margin: '0 0 0.25rem 0', fontFamily: 'monospace', fontSize: '1.1rem', color: 'var(--color-cyan)' }}>Cuenta de Ahorros (Persona Jurídica): 53600019195</p>
                 <p style={{ margin: '0', fontSize: '0.9rem' }}>A nombre de: ONG La Unión Americana</p>
               </div>
 
               <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
                 <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'rgba(255,255,255,0.5)' }}>Transferencias Internacionales (SWIFT)</p>
-                <p style={{ margin: '0 0 0.25rem 0', fontWeight: 'bold' }}>Código SWIFT: BOGOCOBB</p>
+                <p style={{ margin: '0 0 0.25rem 0', fontWeight: 'bold' }}>Código SWIFT: COLOCOBB</p>
                 <p style={{ margin: '0', fontSize: '0.9rem' }}>Ruta internacional disponible para donantes desde Norteamérica, Europa y resto de ALC.</p>
               </div>
             </div>
