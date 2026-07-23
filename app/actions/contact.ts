@@ -16,6 +16,7 @@ export async function submitContact(prevState: ActionState | any, formData: Form
     const pais = formData.get('pais') as string;
     const mensaje = formData.get('mensaje') as string;
     const origen = formData.get('origen') as string || 'contactos'; // Nuevo campo para diferenciar formulario
+    const monto = formData.get('monto') as string || undefined;
 
     if (!nombre || !email || !tipo) {
       return { error: 'Faltan campos obligatorios.', success: false };
@@ -31,7 +32,7 @@ export async function submitContact(prevState: ActionState | any, formData: Form
       // Fallback for demonstration/local testing if env vars are missing
       // We will still send the simulated email and return success
       console.warn("⚠️ Utilizando modo demostración local para registrar contacto.");
-      await sendAutomatedEmail(email, nombre, origen === 'voluntarios' ? 'voluntario' : origen === 'donaciones' ? 'donante' : 'contacto', { pais: pais || undefined, tipo: tipo || undefined, mensaje: mensaje || undefined }).catch(console.error);
+      await sendAutomatedEmail(email, nombre, origen === 'voluntarios' ? 'voluntario' : origen === 'donaciones' ? 'donante' : 'contacto', { pais: pais || undefined, tipo: tipo || undefined, mensaje: mensaje || undefined, monto: monto }).catch(console.error);
       return { 
         success: true, 
         message: '¡Demostración local exitosa! Datos guardados en memoria y correo de confirmación enviado automáticamente.' 
@@ -59,6 +60,8 @@ export async function submitContact(prevState: ActionState | any, formData: Form
       if (table === 'voluntarios') {
         payload.habilidades = mensaje || null;
         payload.estado = 'Nuevo';
+      } else if (table === 'donaciones') {
+        payload.monto = monto || null;
       }
 
       let response = await fetch(endpoint, {
@@ -117,7 +120,7 @@ export async function submitContact(prevState: ActionState | any, formData: Form
       console.log(`✅ ¡ÉXITO! Datos guardados en la tabla: ${table}`);
       
       // Enviar correo de confirmación automatizado con datos completos
-      await sendAutomatedEmail(email, nombre, origen === 'voluntarios' ? 'voluntario' : origen === 'donaciones' ? 'donante' : 'contacto', { pais: pais || undefined, tipo: tipo || undefined, mensaje: mensaje || undefined }).catch(console.error);
+      await sendAutomatedEmail(email, nombre, origen === 'voluntarios' ? 'voluntario' : origen === 'donaciones' ? 'donante' : 'contacto', { pais: pais || undefined, tipo: tipo || undefined, mensaje: mensaje || undefined, monto: monto || undefined }).catch(console.error);
       
       return { success: true, message: '¡Gracias por unerte a La Unión Americana! Hemos guardado tus datos exitosamente y te hemos enviado un correo de confirmación.' };
 

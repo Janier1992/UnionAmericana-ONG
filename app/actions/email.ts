@@ -23,6 +23,7 @@ export interface EmailContactData {
   pais?: string;
   tipo?: string;
   mensaje?: string;
+  monto?: string;
 }
 
 // ─── IN-MEMORY LOG (compatible con entornos serverless como Hostinger) ────────
@@ -422,6 +423,7 @@ function getDonorWelcomeHTML(data: EmailContactData): string {
                 ${dataRow('Correo', data.email, BRAND.mediumBlue)}
                 ${data.pais ? dataRow('País', data.pais) : ''}
                 ${data.tipo ? dataRow('Tipo de Aporte', data.tipo) : ''}
+                ${data.monto ? dataRow('Monto Donado', data.monto) : ''}
                 ${data.mensaje ? dataRow('Detalles', data.mensaje) : ''}
                 ${dataRow('Estado', '🔵 En proceso de verificación', BRAND.mediumBlue)}
               </table>
@@ -512,6 +514,7 @@ function getAdminDonationAlertHTML(data: EmailContactData): string {
                 ${dataRow('Correo Electrónico', data.email, BRAND.mediumBlue)}
                 ${dataRow('País de Origen', data.pais || 'No especificado')}
                 ${dataRow('Tipo de Aporte', data.tipo || 'Donación general')}
+                ${data.monto ? dataRow('Monto / Valor', data.monto) : ''}
                 ${data.mensaje ? dataRow('Detalles del Aporte', data.mensaje) : ''}
                 ${dataRow('Fecha de Registro', timestamp, BRAND.textMuted)}
                 ${dataRow('Estado', '🔵 Pendiente de Verificación', BRAND.mediumBlue)}

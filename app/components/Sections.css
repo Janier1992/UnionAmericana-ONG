@@ -878,3 +878,248 @@ label {
 .admin-mobile-header {
   display: none;
 }
+
+/* === PAGO FACIL MODAL STYLES === */
+.pago-facil-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 17, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 1.5rem;
+}
+
+.pago-facil-modal {
+  width: 100%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 240, 255, 0.1);
+  background: rgba(10, 10, 20, 0.95);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.pago-facil-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  font-size: 2rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  line-height: 1;
+  transition: color var(--duration-fast);
+  background: transparent;
+  border: none;
+  z-index: 10;
+}
+
+.pago-facil-close:hover {
+  color: var(--color-magenta);
+}
+
+.pago-facil-header {
+  padding: 2rem 2rem 1rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pago-facil-header h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-display);
+}
+
+.pago-facil-header p {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.pago-facil-body {
+  padding: 2rem;
+  flex: 1;
+}
+
+/* Steps indicator */
+.pago-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.pago-steps::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  z-index: 1;
+  transform: translateY(-50%);
+}
+
+.pago-step {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(10, 10, 20, 1);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--color-text-muted);
+  z-index: 2;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.pago-step.active {
+  border-color: var(--color-cyan);
+  color: var(--color-cyan);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+.pago-step.completed {
+  border-color: var(--color-violet);
+  background: var(--color-violet);
+  color: #fff;
+}
+
+/* Amount grid */
+.pago-amounts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pago-amount-btn {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.pago-amount-btn:hover {
+  border-color: var(--color-cyan);
+  background: rgba(0, 240, 255, 0.05);
+}
+
+.pago-amount-btn.active {
+  border-color: var(--color-cyan);
+  background: rgba(0, 240, 255, 0.1);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+}
+
+/* Payment method buttons */
+.pago-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pago-method-card {
+  padding: 1.2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  text-align: left;
+}
+
+.pago-method-card:hover {
+  border-color: var(--color-cyan);
+  background: rgba(0, 240, 255, 0.03);
+}
+
+.pago-method-card.active {
+  border-color: var(--color-cyan);
+  background: rgba(0, 240, 255, 0.07);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+}
+
+.pago-method-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-cyan);
+  font-weight: bold;
+}
+
+.pago-method-details h4 {
+  margin: 0 0 0.2rem 0;
+  font-size: 1rem;
+  color: #fff;
+  font-family: var(--font-body);
+}
+
+.pago-method-details p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* Simulated card layout */
+.credit-card-sim {
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(0, 240, 255, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Success status receipt */
+.receipt-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+
+.receipt-label {
+  color: var(--color-text-muted);
+}
+
+.receipt-value {
+  font-weight: 700;
+  color: #fff;
+}

@@ -1,14 +1,16 @@
 'use client';
 
-import React, { useActionState } from 'react';
+import React, { useActionState, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { submitContact, type ActionState } from '../actions/contact';
+import PagoFacilModal from '../components/PagoFacilModal';
 
 const initialState: ActionState = { success: false };
 
 export default function DonacionesPage() {
   const [state, formAction, isPending] = useActionState(submitContact, initialState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
@@ -48,6 +50,17 @@ export default function DonacionesPage() {
                 <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', color: 'rgba(255,255,255,0.5)' }}>Transferencias Internacionales (SWIFT)</p>
                 <p style={{ margin: '0 0 0.25rem 0', fontWeight: 'bold' }}>Código SWIFT: COLOCOBB</p>
                 <p style={{ margin: '0', fontSize: '0.9rem' }}>Ruta internacional disponible para donantes desde Norteamérica, Europa y resto de ALC.</p>
+              </div>
+
+              <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+                <button 
+                  onClick={() => setIsModalOpen(true)}
+                  className="btn btn-primary"
+                  style={{ width: '100%', padding: '1rem', fontSize: '1.1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                  Pago Fácil en Línea
+                </button>
               </div>
             </div>
 
@@ -115,6 +128,8 @@ export default function DonacionesPage() {
           </div>
         </div>
       </div>
+      
+      <PagoFacilModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 }
