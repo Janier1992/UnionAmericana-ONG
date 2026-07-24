@@ -58,18 +58,18 @@ export default function Navbar() {
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <a href="/#inicio" className="nav-logo">
-        <Image
-          src="/Unionamreicana.jpeg"
+        <img
+          src="/logo_alta_calidad.png"
           alt="La Unión Americana — Logo"
-          width={70}
-          height={70}
           style={{ 
             height: '70px', 
-            width: '70px', 
-            objectFit: 'cover',
-            borderRadius: '50%', 
+            width: 'auto', 
+            objectFit: 'contain',
+            borderRadius: '16px',
             border: '2px solid rgba(0, 240, 255, 0.3)',
-            boxShadow: '0 0 15px rgba(0, 240, 255, 0.4)'
+            boxShadow: '0 0 15px rgba(0, 240, 255, 0.4)',
+            backgroundColor: '#fff',
+            padding: '6px'
           }}
         />
         <h1>La Unión Americana</h1>

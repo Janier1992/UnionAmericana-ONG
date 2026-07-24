@@ -7,11 +7,9 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__grid">
         <div className="footer__brand">
-          <Image
-            src="/Unionamreicana.jpeg"
+          <img
+            src="/logo_alta_calidad.png"
             alt="La Unión Americana"
-            width={144}
-            height={48}
             style={{ height: '48px', width: 'auto', marginBottom: '12px', filter: 'brightness(0.9)' }}
           />
           <p style={{

@@ -267,7 +267,7 @@ export default function AdminPortal() {
       {/* Mobile Top Header (visible on mobile only) */}
       <header className="admin-mobile-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <img src="/Unionamreicana.jpeg" alt="Logo" style={{ width: '32px', height: '32px', borderRadius: '50%' }} />
+          <img src="/logo_alta_calidad.png" alt="Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain', borderRadius: '8px', border: '1px solid var(--color-cyan)', backgroundColor: '#fff', padding: '2px' }} />
           <h2 style={{ fontSize: '1rem', color: '#fff', margin: 0, fontFamily: 'var(--font-heading)' }}>UA Admin</h2>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
@@ -328,14 +328,17 @@ export default function AdminPortal() {
         {/* Logo & Title (Desktop only) */}
         <div className="admin-logo">
           <img 
-            src="/Unionamreicana.jpeg" 
+            src="/logo_alta_calidad.png" 
             alt="La Unión Americana" 
             style={{ 
-              width: '45px', 
               height: '45px', 
-              borderRadius: '50%',
+              width: 'auto',
+              objectFit: 'contain',
+              borderRadius: '10px',
               border: '1.5px solid var(--color-cyan)',
-              boxShadow: '0 0 10px rgba(0, 240, 255, 0.3)'
+              boxShadow: '0 0 10px rgba(0, 240, 255, 0.3)',
+              backgroundColor: '#fff',
+              padding: '4px'
             }} 
           />
           <div>
