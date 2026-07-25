@@ -33,17 +33,6 @@ export default function Footer() {
         </div>
 
         <div className="footer__links">
-          <h5>Navegación</h5>
-          <ul>
-            <li><a href="/#inicio">Inicio</a></li>
-            <li><a href="/#mision">Misión</a></li>
-            <li><a href="/#pilares">Modelo Integrado</a></li>
-            <li><a href="/#impacto">Proyecciones</a></li>
-            <li><a href="/admin" style={{ color: 'var(--color-cyan)', fontWeight: 600 }}>Portal CRM</a></li>
-          </ul>
-        </div>
-
-        <div className="footer__links">
           <h5>Proyectos</h5>
           <ul>
             <li><a href="/proyectos/educacion">Educación</a></li>

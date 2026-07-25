@@ -393,8 +393,8 @@ label {
 }
 .footer__links ul {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
+  flex-direction: column;
+  gap: 0.6rem;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -705,10 +705,6 @@ label {
   .footer__grid {
     grid-template-columns: 1fr;
     gap: var(--space-lg);
-  }
-  .footer__links ul {
-    flex-direction: column;
-    gap: 0.6rem;
   }
 }
 
