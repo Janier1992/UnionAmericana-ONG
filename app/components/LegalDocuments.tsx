@@ -168,7 +168,7 @@ export function SecurePdfViewer({ documento, onClose }: { documento: DocumentoLe
     (async () => {
       try {
         const pdfjsLib = await import('pdfjs-dist');
-        pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = '/api/pdfjs-assets/pdf.worker.min.mjs';
 
         const res = await fetch(`/api/documentos-legales/${documento.id}`, { cache: 'no-store' });
         if (!res.ok) throw new Error('No se pudo cargar el documento.');
@@ -177,10 +177,10 @@ export function SecurePdfViewer({ documento, onClose }: { documento: DocumentoLe
 
         const pdf = await pdfjsLib.getDocument({
           data: buffer,
-          cMapUrl: '/pdfjs/cmaps/',
+          cMapUrl: '/api/pdfjs-assets/pdfjs/cmaps/',
           cMapPacked: true,
-          standardFontDataUrl: '/pdfjs/standard_fonts/',
-          wasmUrl: '/pdfjs/wasm/',
+          standardFontDataUrl: '/api/pdfjs-assets/pdfjs/standard_fonts/',
+          wasmUrl: '/api/pdfjs-assets/pdfjs/wasm/',
         }).promise;
         if (cancelled) return;
 
