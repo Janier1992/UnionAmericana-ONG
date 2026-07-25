@@ -66,8 +66,8 @@ export default function Navbar() {
             width: 'auto', 
             objectFit: 'contain',
             borderRadius: '16px',
-            border: '2px solid rgba(0, 240, 255, 0.3)',
-            boxShadow: '0 0 15px rgba(0, 240, 255, 0.4)',
+            border: '2px solid rgba(0, 153, 239, 0.3)',
+            boxShadow: '0 0 15px rgba(0, 153, 239, 0.4)',
             backgroundColor: '#fff',
             padding: '6px'
           }}
@@ -90,7 +90,7 @@ export default function Navbar() {
         ))}
         {showCrmIcon && !isMobile && (
           <li>
-            <a href="/admin" className="nav-link" onClick={closeMenu} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--color-cyan)', border: '1.5px dashed rgba(0, 240, 255, 0.4)', padding: '0.3rem 0.7rem', borderRadius: '8px', fontSize: '0.85rem' }}>
+            <a href="/admin" className="nav-link" onClick={closeMenu} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--color-cyan)', border: '1.5px dashed rgba(0, 153, 239, 0.4)', padding: '0.3rem 0.7rem', borderRadius: '8px', fontSize: '0.85rem' }}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation: 'spin 12s linear infinite', display: 'inline-block' }}>
                 <circle cx="12" cy="12" r="3"></circle>
                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>

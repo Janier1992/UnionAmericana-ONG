@@ -112,7 +112,7 @@ export default function Pillars() {
               whileHover={{ 
                 scale: 1.03, 
                 y: -8,
-                boxShadow: '0 12px 40px rgba(0, 240, 255, 0.15), inset 0 0 0 1px rgba(0, 240, 255, 0.1)'
+                boxShadow: '0 12px 40px rgba(0, 153, 239, 0.15), inset 0 0 0 1px rgba(0, 153, 239, 0.1)'
               }}
               onClick={() => setActivePillar(idx)}
               style={{
@@ -134,7 +134,7 @@ export default function Pillars() {
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(17,17,17,1))' }} />
               </div>
               <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', flexGrow: 1, position: 'relative' }}>
-                <div style={{ position: 'absolute', top: '10px', right: '15px', fontSize: '5rem', color: 'rgba(0, 240, 255, 0.05)', fontWeight: 800, fontFamily: 'var(--font-heading)', lineHeight: 0.8 }}>
+                <div style={{ position: 'absolute', top: '10px', right: '15px', fontSize: '5rem', color: 'rgba(0, 153, 239, 0.05)', fontWeight: 800, fontFamily: 'var(--font-heading)', lineHeight: 0.8 }}>
                   {pillar.id}
                 </div>
                 <h3 style={{ color: 'var(--color-text-main)', fontSize: '1.4rem', fontFamily: 'var(--font-heading)', zIndex: 1 }}>{pillar.title}</h3>
@@ -165,7 +165,7 @@ export default function Pillars() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setActivePillar(null)}
-              style={{ position: 'absolute', inset: 0, background: 'rgba(5, 5, 17, 0.8)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
+              style={{ position: 'absolute', inset: 0, background: 'rgba(5, 11, 22, 0.8)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
             />
             
             {/* Modal Content */}
@@ -180,8 +180,8 @@ export default function Pillars() {
                 maxWidth: '650px',
                 maxHeight: '90vh',
                 backgroundColor: 'rgba(15, 15, 30, 0.9)',
-                border: '1px solid rgba(0, 240, 255, 0.25)',
-                boxShadow: '0 20px 50px rgba(0, 240, 255, 0.1), inset 0 0 15px rgba(255, 255, 255, 0.02)',
+                border: '1px solid rgba(0, 153, 239, 0.25)',
+                boxShadow: '0 20px 50px rgba(0, 153, 239, 0.1), inset 0 0 15px rgba(255, 255, 255, 0.02)',
                 borderRadius: '24px',
                 padding: '2.5rem',
                 overflowY: 'auto',
@@ -208,7 +208,7 @@ export default function Pillars() {
                   transition: 'all 0.2s',
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255, 0, 85, 0.2)';
+                  e.currentTarget.style.backgroundColor = 'rgba(229, 72, 77, 0.2)';
                   e.currentTarget.style.borderColor = 'var(--color-magenta)';
                 }}
                 onMouseOut={(e) => {

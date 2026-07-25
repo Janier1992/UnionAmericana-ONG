@@ -7,11 +7,11 @@
 }
 
 :root {
-  /* === NEON GLASSMORPHISM PALETTE === */
-  --color-base: #050511;           /* Deep space black */
-  --color-cyan: #00F0FF;           /* Electric Cyan */
-  --color-magenta: #FF0055;        /* Magenta Energy */
-  --color-violet: #8A2BE2;         /* Neon Violet */
+  /* === PALETA DE MARCA (derivada del logo oficial) === */
+  --color-base: #050B16;           /* Azul-negro profundo (antes negro violeta) */
+  --color-cyan: #0099EF;           /* Azul cielo de marca (cinta del logo) */
+  --color-magenta: #E5484D;        /* Rojo de alerta/error (neutral, no es color de marca) */
+  --color-violet: #32A600;         /* Verde de marca (cinta y texto "AMERICANA") */
   
   --color-text-main: #FFFFFF;
   --color-text-muted: rgba(255, 255, 255, 0.65);
@@ -59,8 +59,8 @@
   --radius-pill: 9999px;
 
   /* Neon Shadows */
-  --shadow-cyan: 0 4px 30px rgba(0, 240, 255, 0.3);
-  --shadow-magenta: 0 4px 30px rgba(255, 0, 85, 0.3);
+  --shadow-cyan: 0 4px 30px rgba(0, 153, 239, 0.3);
+  --shadow-magenta: 0 4px 30px rgba(229, 72, 77, 0.3);
   --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 
   --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -93,10 +93,10 @@ body {
   
   /* Modern Mesh Gradient Background */
   background-image: 
-    radial-gradient(at 0% 0%, rgba(138, 43, 226, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(0, 240, 255, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(255, 0, 85, 0.1) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(0, 240, 255, 0.1) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(50, 166, 0, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(0, 153, 239, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(229, 72, 77, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(0, 153, 239, 0.1) 0px, transparent 50%);
   background-attachment: fixed;
   background-size: 200% 200%;
   animation: bg-mesh 20s ease-in-out infinite alternate;
@@ -122,7 +122,7 @@ a {
 
 a:hover {
   color: var(--color-magenta);
-  text-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
+  text-shadow: 0 0 10px rgba(229, 72, 77, 0.4);
 }
 
 button {

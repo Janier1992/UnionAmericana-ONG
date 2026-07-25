@@ -90,7 +90,7 @@ export default function PagoFacilModal({ isOpen, onClose }: PagoFacilModalProps)
       <div className="modal-content glass-panel" style={{
         background: 'var(--color-bg)', border: '1px solid var(--color-cyan)',
         borderRadius: '16px', padding: '2rem', maxWidth: '500px', width: '100%',
-        position: 'relative', boxShadow: '0 10px 40px rgba(0, 240, 255, 0.2)'
+        position: 'relative', boxShadow: '0 10px 40px rgba(0, 153, 239, 0.2)'
       }}>
         
         <button onClick={onClose} style={{

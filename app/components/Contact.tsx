@@ -59,7 +59,7 @@ export default function Contact() {
                   width: '44px', 
                   height: '44px', 
                   borderRadius: '12px', 
-                  background: 'rgba(0, 240, 255, 0.1)', 
+                  background: 'rgba(0, 153, 239, 0.1)', 
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center',
@@ -85,7 +85,7 @@ export default function Contact() {
                   width: '44px', 
                   height: '44px', 
                   borderRadius: '12px', 
-                  background: 'rgba(138, 43, 226, 0.1)', 
+                  background: 'rgba(50, 166, 0, 0.1)', 
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center',
@@ -125,13 +125,13 @@ export default function Contact() {
           <form action={formAction} className="glass-panel" style={{ padding: '2.5rem', margin: 0 }}>
             <input type="hidden" name="origen" value="contactos" />
             {state?.success && (
-              <div style={{ padding: '1rem', background: 'rgba(0,255,0,0.1)', color: '#00F0FF', borderRadius: '8px', marginBottom: '1.5rem', border: '1px solid #00F0FF' }}>
+              <div style={{ padding: '1rem', background: 'rgba(0,255,0,0.1)', color: '#0099EF', borderRadius: '8px', marginBottom: '1.5rem', border: '1px solid #0099EF' }}>
                 {state.message}
               </div>
             )}
 
             {state?.error && (
-              <div style={{ padding: '1rem', background: 'rgba(255,0,85,0.1)', color: '#FF0055', borderRadius: '8px', marginBottom: '1.5rem', border: '1px solid #FF0055' }}>
+              <div style={{ padding: '1rem', background: 'rgba(229, 72, 77,0.1)', color: '#E5484D', borderRadius: '8px', marginBottom: '1.5rem', border: '1px solid #E5484D' }}>
                 {state.error}
               </div>
             )}

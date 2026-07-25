@@ -75,7 +75,7 @@ export default function Footer() {
           onMouseOver={(e) => {
             e.currentTarget.style.borderColor = 'var(--color-cyan)';
             e.currentTarget.style.color = 'var(--color-cyan)';
-            e.currentTarget.style.background = 'rgba(0, 240, 255, 0.05)';
+            e.currentTarget.style.background = 'rgba(0, 153, 239, 0.05)';
           }}
           onMouseOut={(e) => {
             e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';

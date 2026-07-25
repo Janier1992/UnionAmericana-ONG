@@ -24,11 +24,12 @@ export default function Hero() {
 
   return (
     <section className="hero" id="inicio">
-      <div className="hero__background" style={{ 
+      <div className="hero__background" style={{
         backgroundImage: 'url(/images/hero_humanitarian.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        opacity: 0.3
+        opacity: 0.55,
+        filter: 'brightness(1.15)'
       }} />
 
       <div className="hero__map">
@@ -56,7 +57,7 @@ export default function Hero() {
         initial="hidden"
         animate="show"
       >
-        <motion.h1 className="hero__title" variants={itemVariants} style={{ fontSize: 'clamp(2.5rem, 6.5vw, 5.2rem)', lineHeight: 1.05, textShadow: '0 0 30px rgba(0, 240, 255, 0.15)' }}>
+        <motion.h1 className="hero__title" variants={itemVariants} style={{ fontSize: 'clamp(2.5rem, 6.5vw, 5.2rem)', lineHeight: 1.05, textShadow: '0 0 30px rgba(0, 153, 239, 0.15)' }}>
           La Unión<br />
           <span style={{ 
             background: 'linear-gradient(90deg, var(--color-cyan), var(--color-violet))',

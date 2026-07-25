@@ -210,7 +210,7 @@ export default function AdminPortal() {
         alignItems: 'center',
         justifyContent: 'center',
         background: 'var(--color-base)',
-        backgroundImage: 'radial-gradient(at 50% 50%, rgba(138, 43, 226, 0.15) 0px, transparent 50%)',
+        backgroundImage: 'radial-gradient(at 50% 50%, rgba(50, 166, 0, 0.15) 0px, transparent 50%)',
         padding: '20px'
       }}>
         <div className="glass-panel" style={{
@@ -219,8 +219,8 @@ export default function AdminPortal() {
           maxWidth: '450px',
           width: '100%',
           textAlign: 'center',
-          boxShadow: '0 8px 32px 0 rgba(0, 240, 255, 0.1)',
-          border: '1px solid rgba(0, 240, 255, 0.2)'
+          boxShadow: '0 8px 32px 0 rgba(0, 153, 239, 0.1)',
+          border: '1px solid rgba(0, 153, 239, 0.2)'
         }}>
           {/* Close button - redirects to home landing page */}
           <a 
@@ -244,7 +244,7 @@ export default function AdminPortal() {
             onMouseOver={(e) => {
               e.currentTarget.style.color = '#fff';
               e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
-              e.currentTarget.style.borderColor = 'rgba(0, 240, 255, 0.3)';
+              e.currentTarget.style.borderColor = 'rgba(0, 153, 239, 0.3)';
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.color = 'rgba(255,255,255,0.4)';
@@ -358,8 +358,8 @@ export default function AdminPortal() {
             style={{
               padding: '0.4rem 0.8rem',
               borderRadius: '8px',
-              background: 'rgba(0, 240, 255, 0.1)',
-              border: '1px solid rgba(0, 240, 255, 0.2)',
+              background: 'rgba(0, 153, 239, 0.1)',
+              border: '1px solid rgba(0, 153, 239, 0.2)',
               color: 'var(--color-cyan)',
               fontSize: '0.75rem',
               cursor: 'pointer'
@@ -373,8 +373,8 @@ export default function AdminPortal() {
             style={{
               padding: '0.4rem 0.8rem',
               borderRadius: '8px',
-              background: 'rgba(255, 0, 85, 0.1)',
-              border: '1px solid rgba(255, 0, 85, 0.2)',
+              background: 'rgba(229, 72, 77, 0.1)',
+              border: '1px solid rgba(229, 72, 77, 0.2)',
               color: 'var(--color-magenta)',
               fontSize: '0.75rem',
               cursor: 'pointer'
@@ -398,7 +398,7 @@ export default function AdminPortal() {
               objectFit: 'contain',
               borderRadius: '10px',
               border: '1.5px solid var(--color-cyan)',
-              boxShadow: '0 0 10px rgba(0, 240, 255, 0.3)',
+              boxShadow: '0 0 10px rgba(0, 153, 239, 0.3)',
               backgroundColor: '#fff',
               padding: '4px'
             }} 
@@ -476,8 +476,8 @@ export default function AdminPortal() {
               gap: '0.5rem',
               padding: '0.75rem',
               borderRadius: '10px',
-              background: 'rgba(0, 240, 255, 0.08)',
-              border: '1px solid rgba(0, 240, 255, 0.15)',
+              background: 'rgba(0, 153, 239, 0.08)',
+              border: '1px solid rgba(0, 153, 239, 0.15)',
               color: 'var(--color-cyan)',
               fontSize: '0.85rem',
               fontWeight: 600,
@@ -499,8 +499,8 @@ export default function AdminPortal() {
               width: '100%',
               padding: '0.75rem',
               borderRadius: '10px',
-              background: 'rgba(255, 0, 85, 0.08)',
-              border: '1px solid rgba(255, 0, 85, 0.15)',
+              background: 'rgba(229, 72, 77, 0.08)',
+              border: '1px solid rgba(229, 72, 77, 0.15)',
               color: 'var(--color-magenta)',
               fontSize: '0.85rem',
               fontWeight: 600,
@@ -541,7 +541,7 @@ export default function AdminPortal() {
               <div className="glass-panel" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', borderLeft: '4px solid var(--color-cyan)' }}>
                 <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>Voluntarios Registrados</span>
                 <strong style={{ fontSize: '2.5rem', color: '#fff', margin: '0.5rem 0', fontFamily: 'var(--font-heading)' }}>{totalVoluntarios}</strong>
-                <span style={{ fontSize: '0.8rem', color: '#00F0FF' }}>🤝 Talento Continental</span>
+                <span style={{ fontSize: '0.8rem', color: '#0099EF' }}>🤝 Talento Continental</span>
               </div>
               <div className="glass-panel" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', borderLeft: '4px solid var(--color-violet)' }}>
                 <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>Financiadores e Inversores</span>
@@ -652,10 +652,11 @@ export default function AdminPortal() {
                           borderRadius: '8px', 
                           fontSize: '0.8rem', 
                           fontWeight: 700,
-                          background: item.estado === 'Aprobado' ? 'rgba(76, 175, 80, 0.2)' : item.estado === 'Contactado' ? 'rgba(138, 43, 226, 0.2)' : item.estado === 'Rechazado' ? 'rgba(255, 0, 85, 0.2)' : 'rgba(0, 240, 255, 0.15)',
+                          background: item.estado === 'Aprobado' ? 'rgba(76, 175, 80, 0.2)' : item.estado === 'Contactado' ? 'rgba(50, 166, 0, 0.2)' : item.estado === 'Rechazado' ? 'rgba(229, 72, 77, 0.2)' : 'rgba(0, 153, 239, 0.15)',
                           color: item.estado === 'Aprobado' ? '#4caf50' : item.estado === 'Contactado' ? 'var(--color-violet)' : item.estado === 'Rechazado' ? 'var(--color-magenta)' : 'var(--color-cyan)',
                           border: `1px solid ${item.estado === 'Aprobado' ? '#4caf50' : item.estado === 'Contactado' ? 'var(--color-violet)' : item.estado === 'Rechazado' ? 'var(--color-magenta)' : 'var(--color-cyan)'}`
                         }}>
+                          {item.estado === 'Aprobado' ? '✔️ ' : item.estado === 'Contactado' ? '📞 ' : item.estado === 'Rechazado' ? '✕ ' : '🕓 '}
                           {item.estado || 'Nuevo'}
                         </span>
                       </td>
@@ -675,14 +676,14 @@ export default function AdminPortal() {
                                 </button>
                                 <button 
                                   onClick={() => handleUpdateVolunteerStatus(item.id, 'Contactado')}
-                                  style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(138, 43, 226, 0.15)', border: '1px solid rgba(138, 43, 226, 0.3)', color: 'var(--color-violet)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
+                                  style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(50, 166, 0, 0.15)', border: '1px solid rgba(50, 166, 0, 0.3)', color: 'var(--color-violet)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
                                   title="Marcar como Contactado"
                                 >
                                   📞 Contactar
                                 </button>
                                 <button 
                                   onClick={() => handleUpdateVolunteerStatus(item.id, 'Rechazado')}
-                                  style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(255, 0, 85, 0.1)', border: '1px solid rgba(255, 0, 85, 0.2)', color: 'var(--color-magenta)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
+                                  style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(229, 72, 77, 0.1)', border: '1px solid rgba(229, 72, 77, 0.2)', color: 'var(--color-magenta)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
                                   title="Rechazar Voluntario"
                                 >
                                   ❌ Rechazar
@@ -692,7 +693,7 @@ export default function AdminPortal() {
                             {(item.estado === 'Aprobado' || item.estado === 'Contactado') && (
                               <button 
                                 onClick={() => handleUpdateVolunteerStatus(item.id, 'Rechazado')}
-                                style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(255, 0, 85, 0.1)', border: '1px solid rgba(255, 0, 85, 0.2)', color: 'var(--color-magenta)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
+                                style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(229, 72, 77, 0.1)', border: '1px solid rgba(229, 72, 77, 0.2)', color: 'var(--color-magenta)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
                                 title="Rechazar Voluntario"
                               >
                                 ❌ Rechazar
@@ -702,14 +703,14 @@ export default function AdminPortal() {
                               <>
                                 <button 
                                   onClick={() => handleUpdateVolunteerStatus(item.id, 'Pendiente')}
-                                  style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(0, 240, 255, 0.1)', border: '1px solid rgba(0, 240, 255, 0.2)', color: 'var(--color-cyan)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
+                                  style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(0, 153, 239, 0.1)', border: '1px solid rgba(0, 153, 239, 0.2)', color: 'var(--color-cyan)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
                                   title="Reactivar a Pendiente"
                                 >
                                   🔄 Reactivar
                                 </button>
                                 <button 
                                   onClick={() => handleDeleteVolunteer(item.id)}
-                                  style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(255, 0, 85, 0.2)', border: '1px solid #FF0055', color: '#fff', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
+                                  style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(229, 72, 77, 0.2)', border: '1px solid #E5484D', color: '#fff', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
                                   title="Eliminar de la Base de Datos"
                                 >
                                   🗑️ Eliminar
@@ -946,11 +947,11 @@ export default function AdminPortal() {
                         <td style={{ padding: '1.2rem 1rem' }}>
                           <span style={{
                             padding: '0.25rem 0.75rem', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700,
-                            background: doc.activo ? 'rgba(76, 175, 80, 0.2)' : 'rgba(255, 0, 85, 0.2)',
+                            background: doc.activo ? 'rgba(76, 175, 80, 0.2)' : 'rgba(229, 72, 77, 0.2)',
                             color: doc.activo ? '#4caf50' : 'var(--color-magenta)',
                             border: `1px solid ${doc.activo ? '#4caf50' : 'var(--color-magenta)'}`
                           }}>
-                            {doc.activo ? 'Publicado' : 'Oculto'}
+                            {doc.activo ? '✅ Publicado' : '🙈 Oculto'}
                           </span>
                         </td>
                         <td style={{ padding: '1.2rem 1rem', textAlign: 'center' }}>
@@ -960,21 +961,21 @@ export default function AdminPortal() {
                             <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                               <button
                                 onClick={() => setViewingDoc(doc)}
-                                style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(0, 240, 255, 0.1)', border: '1px solid rgba(0, 240, 255, 0.2)', color: 'var(--color-cyan)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
+                                style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(0, 153, 239, 0.1)', border: '1px solid rgba(0, 153, 239, 0.2)', color: 'var(--color-cyan)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
                                 title="Ver documento"
                               >
                                 👁️ Ver
                               </button>
                               <button
                                 onClick={() => handleToggleActivoDocumento(doc)}
-                                style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(138, 43, 226, 0.15)', border: '1px solid rgba(138, 43, 226, 0.3)', color: 'var(--color-violet)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
+                                style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(50, 166, 0, 0.15)', border: '1px solid rgba(50, 166, 0, 0.3)', color: 'var(--color-violet)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
                                 title={doc.activo ? 'Ocultar del sitio público' : 'Publicar en el sitio público'}
                               >
                                 {doc.activo ? '🙈 Ocultar' : '✅ Publicar'}
                               </button>
                               <button
                                 onClick={() => handleDeleteDocumento(doc)}
-                                style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(255, 0, 85, 0.2)', border: '1px solid #FF0055', color: '#fff', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
+                                style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(229, 72, 77, 0.2)', border: '1px solid #E5484D', color: '#fff', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
                                 title="Eliminar permanentemente"
                               >
                                 🗑️ Eliminar
@@ -999,13 +1000,13 @@ export default function AdminPortal() {
                 width: '80px', 
                 height: '80px', 
                 borderRadius: '50%', 
-                background: 'rgba(0, 240, 255, 0.1)', 
+                background: 'rgba(0, 153, 239, 0.1)', 
                 border: '1.5px solid var(--color-cyan)', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center', 
                 margin: '0 auto 1.5rem auto',
-                boxShadow: '0 0 20px rgba(0, 240, 255, 0.3)'
+                boxShadow: '0 0 20px rgba(0, 153, 239, 0.3)'
               }}>
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-cyan)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
