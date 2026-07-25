@@ -5,12 +5,13 @@ import Mission from './components/Mission';
 import Pillars from './components/Pillars';
 import Impact from './components/Impact';
 import Contact from './components/Contact';
-import { useParallax, useSmoothScroll } from './components/RevealOnScroll';
+import { useParallax, useSmoothScroll, useRevealOnScroll } from './components/RevealOnScroll';
 
 export default function HomePage() {
   // Initialize custom hooks for parallax/scroll (if still needed)
   useParallax();
   useSmoothScroll();
+  useRevealOnScroll();
 
   return (
     <>

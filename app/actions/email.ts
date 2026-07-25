@@ -6,6 +6,18 @@ import { Resend } from 'resend';
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
+// Los datos de estas plantillas vienen de formularios públicos sin autenticar
+// (nombre, mensaje, país, tipo, monto). Sin escapar, un remitente podría inyectar
+// HTML/enlaces en el correo que recibe gerencia@launionamericana.org.
+function escapeHtml(value: string): string {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export interface EmailLog {
   id: string;
   to: string;
@@ -176,10 +188,10 @@ function dataRow(label: string, value: string, color?: string): string {
   return `
     <tr>
       <td style="padding: 10px 15px; font-family: 'Segoe UI', sans-serif; font-size: 13px; color: ${BRAND.textMuted}; border-bottom: 1px solid #EDF2F7; width: 140px; font-weight: 600;">
-        ${label}
+        ${escapeHtml(label)}
       </td>
       <td style="padding: 10px 15px; font-family: 'Segoe UI', sans-serif; font-size: 14px; color: ${color || BRAND.textDark}; border-bottom: 1px solid #EDF2F7; font-weight: 500;">
-        ${value}
+        ${escapeHtml(value)}
       </td>
     </tr>`;
 }
@@ -232,7 +244,7 @@ function getVolunteerWelcomeHTML(data: EmailContactData): string {
         </table>
 
         <p style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: ${BRAND.textDark}; line-height: 1.7; margin: 0 0 15px 0;">
-          Estimado/a <strong style="color: ${BRAND.darkBlue};">${data.nombre}</strong>,
+          Estimado/a <strong style="color: ${BRAND.darkBlue};">${escapeHtml(data.nombre)}</strong>,
         </p>
 
         <p style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: ${BRAND.textDark}; line-height: 1.7; margin: 0 0 15px 0;">
@@ -396,7 +408,7 @@ function getDonorWelcomeHTML(data: EmailContactData): string {
         </table>
 
         <p style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: ${BRAND.textDark}; line-height: 1.7; margin: 0 0 15px 0;">
-          Estimado/a <strong style="color: ${BRAND.darkBlue};">${data.nombre}</strong>,
+          Estimado/a <strong style="color: ${BRAND.darkBlue};">${escapeHtml(data.nombre)}</strong>,
         </p>
 
         <p style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: ${BRAND.textDark}; line-height: 1.7; margin: 0 0 15px 0;">
@@ -572,7 +584,7 @@ function getContactWelcomeHTML(data: EmailContactData): string {
         </table>
 
         <p style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: ${BRAND.textDark}; line-height: 1.7; margin: 0 0 15px 0;">
-          Estimado/a <strong style="color: ${BRAND.darkBlue};">${data.nombre}</strong>,
+          Estimado/a <strong style="color: ${BRAND.darkBlue};">${escapeHtml(data.nombre)}</strong>,
         </p>
 
         <p style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: ${BRAND.textDark}; line-height: 1.7; margin: 0 0 15px 0;">
@@ -692,7 +704,7 @@ function getVolunteerApprovedHTML(name: string): string {
         </table>
 
         <p style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: ${BRAND.textDark}; line-height: 1.7; margin: 0 0 15px 0;">
-          Estimado/a <strong style="color: ${BRAND.darkBlue};">${name}</strong>,
+          Estimado/a <strong style="color: ${BRAND.darkBlue};">${escapeHtml(name)}</strong>,
         </p>
 
         <p style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: ${BRAND.textDark}; line-height: 1.7; margin: 0 0 15px 0;">
@@ -736,7 +748,7 @@ function getVolunteerRejectedHTML(name: string): string {
     <tr>
       <td style="padding: 35px 30px;">
         <p style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: ${BRAND.textDark}; line-height: 1.7; margin: 0 0 15px 0;">
-          Estimado/a <strong style="color: ${BRAND.darkBlue};">${name}</strong>,
+          Estimado/a <strong style="color: ${BRAND.darkBlue};">${escapeHtml(name)}</strong>,
         </p>
 
         <p style="font-family: 'Segoe UI', sans-serif; font-size: 15px; color: ${BRAND.textDark}; line-height: 1.7; margin: 0 0 15px 0;">

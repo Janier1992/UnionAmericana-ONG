@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { getRecords, loginAdmin, updateRecord, deleteRecord, createContactRecord } from '../actions/contact';
 import { getEmailLogs, type EmailLog } from '../actions/email';
+import { listarDocumentosLegalesAdmin, subirDocumentoLegal, eliminarDocumentoLegal, type DocumentoLegal } from '../actions/documentos';
+import { SecurePdfViewer } from '../components/LegalDocuments';
 
 export default function AdminPortal() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -11,7 +13,7 @@ export default function AdminPortal() {
   const [password, setPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'voluntarios' | 'donaciones' | 'contactos' | 'emails'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'voluntarios' | 'donaciones' | 'contactos' | 'emails' | 'documentos'>('dashboard');
 
   // Load session from sessionStorage on mount
   useEffect(() => {
@@ -28,7 +30,11 @@ export default function AdminPortal() {
   const [donaciones, setDonaciones] = useState<any[]>([]);
   const [contactos, setContactos] = useState<any[]>([]);
   const [emailLogs, setEmailLogs] = useState<EmailLog[]>([]);
+  const [documentosLegales, setDocumentosLegales] = useState<DocumentoLegal[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUploadingDoc, setIsUploadingDoc] = useState(false);
+  const [docUpdatingId, setDocUpdatingId] = useState<string | null>(null);
+  const [viewingDoc, setViewingDoc] = useState<DocumentoLegal | null>(null);
 
   // Auth Handler against Insforge
   const handleAuth = async (e: React.FormEvent) => {
@@ -71,17 +77,20 @@ export default function AdminPortal() {
       const dbDonaciones = await getRecords('donaciones', activeToken);
       const dbContactos = await getRecords('contactos', activeToken);
       const logs = await getEmailLogs();
+      const dbDocumentos = await listarDocumentosLegalesAdmin(activeToken);
 
       // Only display real database records from Insforge
       setVoluntarios(dbVoluntarios);
       setDonaciones(dbDonaciones);
       setContactos(dbContactos);
       setEmailLogs(logs);
+      setDocumentosLegales(dbDocumentos);
     } catch (e) {
       console.error("Error loading Insforge records:", e);
       setVoluntarios([]);
       setDonaciones([]);
       setContactos([]);
+      setDocumentosLegales([]);
     } finally {
       setIsLoading(false);
     }
@@ -133,6 +142,59 @@ export default function AdminPortal() {
       loadData(authToken);
     }
   }, [isAuthenticated, authToken]);
+
+  const handleUploadDocumento = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    setIsUploadingDoc(true);
+    try {
+      const res = await subirDocumentoLegal(formData, authToken);
+      if (res.success) {
+        form.reset();
+        await loadData(authToken);
+      } else {
+        alert(`Error al subir el documento: ${res.error}`);
+      }
+    } catch (err: any) {
+      alert(`Error de red: ${err.message}`);
+    } finally {
+      setIsUploadingDoc(false);
+    }
+  };
+
+  const handleDeleteDocumento = async (doc: DocumentoLegal) => {
+    if (!confirm(`¿Eliminar permanentemente "${doc.titulo}"? Esta acción no se puede deshacer.`)) return;
+    setDocUpdatingId(doc.id);
+    try {
+      const res = await eliminarDocumentoLegal(doc.id, doc.storage_key, authToken);
+      if (res.success) {
+        await loadData(authToken);
+      } else {
+        alert(`Error al eliminar: ${res.error}`);
+      }
+    } catch (err: any) {
+      alert(`Error de red: ${err.message}`);
+    } finally {
+      setDocUpdatingId(null);
+    }
+  };
+
+  const handleToggleActivoDocumento = async (doc: DocumentoLegal) => {
+    setDocUpdatingId(doc.id);
+    try {
+      const res = await updateRecord('documentos_legales', doc.id, { activo: !doc.activo }, authToken);
+      if (res.success) {
+        await loadData(authToken);
+      } else {
+        alert(`Error al actualizar: ${res.error}`);
+      }
+    } catch (err: any) {
+      alert(`Error de red: ${err.message}`);
+    } finally {
+      setDocUpdatingId(null);
+    }
+  };
 
   // Calculations for dashboard
   const totalVoluntarios = voluntarios.length;
@@ -354,6 +416,7 @@ export default function AdminPortal() {
             { id: 'voluntarios', label: 'Voluntarios', icon: '🤝' },
             { id: 'donaciones', label: 'Donaciones', icon: '💰' },
             { id: 'contactos', label: 'Aliados', icon: '✉️' },
+            { id: 'documentos', label: 'Documentos Legales', icon: '📄' },
             { id: 'emails', label: 'Correos', icon: '📧' }
           ].map(tab => (
             <button
@@ -461,7 +524,8 @@ export default function AdminPortal() {
               {activeTab === 'dashboard' ? 'Dashboard General' :
                activeTab === 'voluntarios' ? 'Registro de Voluntarios' :
                activeTab === 'donaciones' ? 'Gestión de Donaciones' :
-               activeTab === 'contactos' ? 'Aliados y Mensajes' : 'Historial de Correos'}
+               activeTab === 'contactos' ? 'Aliados y Mensajes' :
+               activeTab === 'documentos' ? 'Documentos Legales y Normativos' : 'Historial de Correos'}
             </h1>
           </div>
         </div>
@@ -811,6 +875,122 @@ export default function AdminPortal() {
           </div>
         )}
 
+        {/* TAB: DOCUMENTOS LEGALES */}
+        {activeTab === 'documentos' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            {/* Upload Form Panel */}
+            <div className="glass-panel" style={{ padding: '2rem' }}>
+              <h3 style={{ fontSize: '1.25rem', color: '#fff', marginBottom: '1.2rem', fontFamily: 'var(--font-heading)' }}>
+                📄 Subir Nuevo Documento Legal
+              </h3>
+              <form onSubmit={handleUploadDocumento} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                    <label style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>Título *</label>
+                    <input required name="titulo" type="text" placeholder="Ej. Acta de Constitución" style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.3)', color: '#fff' }} />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                    <label style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>Categoría</label>
+                    <input name="categoria" type="text" placeholder="Ej. Estatutos" style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.3)', color: '#fff' }} />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                    <label style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>Orden</label>
+                    <input name="orden" type="number" defaultValue={0} style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.3)', color: '#fff' }} />
+                  </div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                  <label style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>Descripción</label>
+                  <textarea name="descripcion" rows={2} placeholder="Breve descripción del documento..." style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.3)', color: '#fff', resize: 'vertical' }} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                  <label style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>Archivo PDF *</label>
+                  <input required name="file" type="file" accept="application/pdf,.pdf" style={{ padding: '0.75rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.3)', color: '#fff' }} />
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <button
+                    disabled={isUploadingDoc}
+                    type="submit"
+                    className="btn btn-primary"
+                    style={{ padding: '0.75rem 1.5rem', borderRadius: '8px', fontSize: '0.9rem', cursor: 'pointer' }}
+                  >
+                    {isUploadingDoc ? 'Subiendo...' : '⬆️ Subir Documento'}
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Documents Table */}
+            <div className="glass-panel" style={{ padding: '2rem', overflowX: 'auto' }}>
+              <h3 style={{ fontSize: '1.25rem', color: '#fff', marginBottom: '1.5rem', fontFamily: 'var(--font-heading)' }}>
+                Documentos Publicados
+              </h3>
+              {documentosLegales.length === 0 ? (
+                <p style={{ color: 'rgba(255,255,255,0.5)', textAlign: 'center', padding: '2rem' }}>Aún no se ha subido ningún documento.</p>
+              ) : (
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem' }}>
+                      <th style={{ padding: '1rem' }}>Título</th>
+                      <th style={{ padding: '1rem' }}>Categoría</th>
+                      <th style={{ padding: '1rem' }}>Orden</th>
+                      <th style={{ padding: '1rem' }}>Estado</th>
+                      <th style={{ padding: '1rem', textAlign: 'center' }}>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {documentosLegales.map((doc) => (
+                      <tr key={doc.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: '0.95rem' }}>
+                        <td style={{ padding: '1.2rem 1rem', fontWeight: 600, color: '#fff' }}>{doc.titulo}</td>
+                        <td style={{ padding: '1.2rem 1rem', color: '#aaa' }}>{doc.categoria || '—'}</td>
+                        <td style={{ padding: '1.2rem 1rem', color: '#aaa' }}>{doc.orden}</td>
+                        <td style={{ padding: '1.2rem 1rem' }}>
+                          <span style={{
+                            padding: '0.25rem 0.75rem', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700,
+                            background: doc.activo ? 'rgba(76, 175, 80, 0.2)' : 'rgba(255, 0, 85, 0.2)',
+                            color: doc.activo ? '#4caf50' : 'var(--color-magenta)',
+                            border: `1px solid ${doc.activo ? '#4caf50' : 'var(--color-magenta)'}`
+                          }}>
+                            {doc.activo ? 'Publicado' : 'Oculto'}
+                          </span>
+                        </td>
+                        <td style={{ padding: '1.2rem 1rem', textAlign: 'center' }}>
+                          {docUpdatingId === doc.id ? (
+                            <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)' }}>Procesando...</span>
+                          ) : (
+                            <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                              <button
+                                onClick={() => setViewingDoc(doc)}
+                                style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(0, 240, 255, 0.1)', border: '1px solid rgba(0, 240, 255, 0.2)', color: 'var(--color-cyan)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
+                                title="Ver documento"
+                              >
+                                👁️ Ver
+                              </button>
+                              <button
+                                onClick={() => handleToggleActivoDocumento(doc)}
+                                style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(138, 43, 226, 0.15)', border: '1px solid rgba(138, 43, 226, 0.3)', color: 'var(--color-violet)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
+                                title={doc.activo ? 'Ocultar del sitio público' : 'Publicar en el sitio público'}
+                              >
+                                {doc.activo ? '🙈 Ocultar' : '✅ Publicar'}
+                              </button>
+                              <button
+                                onClick={() => handleDeleteDocumento(doc)}
+                                style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(255, 0, 85, 0.2)', border: '1px solid #FF0055', color: '#fff', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
+                                title="Eliminar permanentemente"
+                              >
+                                🗑️ Eliminar
+                              </button>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* TAB 5: EMAILS INFORMATION */}
         {activeTab === 'emails' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -884,6 +1064,10 @@ export default function AdminPortal() {
         )}
 
       </div>
+
+      {viewingDoc && (
+        <SecurePdfViewer documento={viewingDoc} onClose={() => setViewingDoc(null)} />
+      )}
     </div>
   );
 }

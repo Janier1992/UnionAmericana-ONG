@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import LegalDocuments from './LegalDocuments';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -58,6 +59,7 @@ export default function Footer() {
             <li><a href="/legal/privacidad">Política de Privacidad</a></li>
             <li><a href="/legal/terminos">Términos de Uso</a></li>
             <li><a href="/legal/transparencia">Transparencia</a></li>
+            <li><LegalDocuments /></li>
           </ul>
         </div>
       </div>
