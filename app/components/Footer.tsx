@@ -66,6 +66,38 @@ export default function Footer() {
 
       <div className="footer__bottom">
         <span>© {currentYear} La Unión Americana. Todos los derechos reservados.</span>
+        <a
+          href="https://www.facebook.com/share/1DHXFfdd9M/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook"
+          style={{
+            width: '36px',
+            height: '36px',
+            borderRadius: '50%',
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'var(--color-text-muted)',
+            transition: 'all 0.2s',
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.borderColor = 'var(--color-cyan)';
+            e.currentTarget.style.color = 'var(--color-cyan)';
+            e.currentTarget.style.background = 'rgba(0, 240, 255, 0.05)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+            e.currentTarget.style.color = 'var(--color-text-muted)';
+            e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+          }}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+          </svg>
+        </a>
         <span>Diseñado con dignidad y propósito.</span>
       </div>
     </footer>

@@ -391,6 +391,14 @@ label {
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.footer__links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 .footer__links a {
   color: var(--color-text-muted);
   transition: all var(--duration-fast);
@@ -694,9 +702,13 @@ label {
   }
 
   /* Footer */
-  .footer__grid { 
-    grid-template-columns: 1fr; 
+  .footer__grid {
+    grid-template-columns: 1fr;
     gap: var(--space-lg);
+  }
+  .footer__links ul {
+    flex-direction: column;
+    gap: 0.6rem;
   }
 }
 
