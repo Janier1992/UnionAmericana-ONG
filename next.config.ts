@@ -5,6 +5,19 @@ const nextConfig: NextConfig = {
   images: {
     qualities: [75, 100],
   },
+  // Consolida www + non-www en un solo dominio canónico (evita contenido
+  // duplicado ante Google y la confusión de tener dos propiedades en
+  // Search Console para el mismo sitio).
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.launionamericana.org' }],
+        destination: 'https://launionamericana.org/:path*',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
