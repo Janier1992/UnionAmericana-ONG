@@ -1,4 +1,10 @@
 import React from 'react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Tecnología y Hub Global — La Unión Americana',
+  robots: { index: false, follow: true },
+};
 
 export default function TecnologiaPage() {
   return (

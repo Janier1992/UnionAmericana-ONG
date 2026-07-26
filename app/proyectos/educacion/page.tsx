@@ -1,4 +1,10 @@
 import React from 'react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Educación y Desarrollo de Talento — La Unión Americana',
+  robots: { index: false, follow: true },
+};
 
 export default function EducacionPage() {
   return (

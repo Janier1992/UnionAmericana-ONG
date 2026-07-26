@@ -1,4 +1,10 @@
 import React from 'react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Cultura e Identidad Latinoamericana — La Unión Americana',
+  robots: { index: false, follow: true },
+};
 
 export default function CulturaPage() {
   return (
