@@ -54,18 +54,18 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              // Scripts: solo del propio dominio, Wompi, y scripts inline de Next.js
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.wompi.co",
+              // Scripts: solo del propio dominio y scripts inline de Next.js
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
               // Estilos: propios e inline
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               // Fuentes: propias y Google Fonts
               "font-src 'self' https://fonts.gstatic.com",
-              // Imágenes: propias, datos base64, y dominios externos usados
-              "img-src 'self' data: https://wompi.com https://*.wompi.co",
-              // Conexiones de red: propias, Wompi, InsForge, Resend
-              "connect-src 'self' https://*.wompi.co https://*.insforge.app https://api.resend.com",
-              // Frames: solo Wompi (para el widget de pago)
-              "frame-src 'self' https://checkout.wompi.co",
+              // Imágenes: propias y datos base64
+              "img-src 'self' data:",
+              // Conexiones de red: propias, InsForge, Resend
+              "connect-src 'self' https://*.insforge.app https://api.resend.com",
+              // Frames: solo el propio dominio (visor de hoja de vida en el admin)
+              "frame-src 'self'",
               // Objetos embebidos: ninguno
               "object-src 'none'",
               // Formularios: solo al propio dominio
@@ -73,21 +73,6 @@ const nextConfig: NextConfig = {
               // Bloquea contenido mixto HTTP/HTTPS
               "upgrade-insecure-requests",
             ].join('; '),
-          },
-        ],
-      },
-      {
-        // Headers específicos para el webhook de Wompi
-        source: '/api/wompi/webhook',
-        headers: [
-          // Solo permite POST desde Wompi
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: 'https://wompi.co',
-          },
-          {
-            key: 'Access-Control-Allow-Methods',
-            value: 'POST',
           },
         ],
       },
