@@ -8,6 +8,54 @@ export interface ActionState {
   error?: string;
 }
 
+const BUCKET_HOJAS_VIDA = 'hojas-de-vida';
+const ALLOWED_CV_MIME = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+const ALLOWED_CV_EXT = ['pdf', 'doc', 'docx'];
+const MAX_CV_SIZE = 5 * 1024 * 1024; // 5MB
+
+// Sube la hoja de vida al bucket privado usando la clave admin (server-only).
+// El bucket nunca se expone al cliente: solo el admin autenticado puede
+// descargar el archivo más adelante vía /api/voluntarios-cv/[id].
+async function subirHojaVida(file: File, insforgeUrl: string): Promise<{ key: string; nombre: string } | { error: string }> {
+  const adminKey = process.env.INSFORGE_API_KEY;
+  if (!adminKey) {
+    console.error('Falta INSFORGE_API_KEY para subir la hoja de vida.');
+    return { error: 'No se pudo procesar el archivo en este momento. Intenta enviar el formulario sin la hoja de vida.' };
+  }
+  if (file.size > MAX_CV_SIZE) {
+    return { error: 'La hoja de vida no debe superar 5MB.' };
+  }
+
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  if (!ALLOWED_CV_EXT.includes(ext) && !ALLOWED_CV_MIME.includes(file.type)) {
+    return { error: 'La hoja de vida debe ser un archivo PDF o Word (.doc, .docx).' };
+  }
+
+  const base = insforgeUrl.replace(/\/+$/, '');
+  const key = `${crypto.randomUUID()}.${ext || 'pdf'}`;
+  const uploadFd = new FormData();
+  uploadFd.append('file', file, key);
+
+  try {
+    const res = await fetch(`${base}/api/storage/buckets/${BUCKET_HOJAS_VIDA}/objects/${key}`, {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${adminKey}` },
+      body: uploadFd,
+    });
+
+    if (!res.ok) {
+      const txt = await res.text();
+      console.error('Error subiendo hoja de vida:', txt);
+      return { error: 'No se pudo subir la hoja de vida. Intenta nuevamente.' };
+    }
+
+    return { key, nombre: file.name };
+  } catch (error: any) {
+    console.error('Error de red subiendo hoja de vida:', error);
+    return { error: 'Error de red al subir la hoja de vida.' };
+  }
+}
+
 export async function submitContact(prevState: ActionState | any, formData: FormData): Promise<ActionState> {
   try {
     const nombre = formData.get('nombre') as string;
@@ -42,11 +90,28 @@ export async function submitContact(prevState: ActionState | any, formData: Form
     // Rutear dinámicamente según el origen (voluntarios, donaciones, contactos)
     const table = origen === 'voluntarios' ? 'voluntarios' : origen === 'donaciones' ? 'donaciones' : 'contactos';
     const base = insforgeUrl.replace(/\/$/, '');
-    
+
     // RUTA OFICIAL DE INSFORGE: /api/database/records/{tabla}
     const endpoint = `${base}/api/database/records/${table}`;
 
     console.log(`🚀 Enviando datos a Insforge: ${endpoint}`);
+
+    // Hoja de vida (solo aplica a voluntarios): se sube ANTES de insertar
+    // el registro para poder guardar la clave del archivo en el mismo insert.
+    let hojaVidaKey: string | null = null;
+    let hojaVidaNombre: string | null = null;
+
+    if (table === 'voluntarios') {
+      const hojaVidaFile = formData.get('hoja_vida') as File | null;
+      if (hojaVidaFile && hojaVidaFile.size > 0) {
+        const resultado = await subirHojaVida(hojaVidaFile, insforgeUrl);
+        if ('error' in resultado) {
+          return { error: resultado.error, success: false };
+        }
+        hojaVidaKey = resultado.key;
+        hojaVidaNombre = resultado.nombre;
+      }
+    }
 
     try {
       const payload: any = {
@@ -60,6 +125,8 @@ export async function submitContact(prevState: ActionState | any, formData: Form
       if (table === 'voluntarios') {
         payload.habilidades = mensaje || null;
         payload.estado = 'Nuevo';
+        payload.hoja_vida_key = hojaVidaKey;
+        payload.hoja_vida_nombre = hojaVidaNombre;
       } else if (table === 'donaciones') {
         payload.monto = monto || null;
       }

@@ -170,6 +170,17 @@ export default function Contact() {
               <textarea id="mensaje" name="mensaje" rows={4} placeholder="Cuéntanos más sobre ti..." style={{ padding: '0.8rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(0,0,0,0.2)', color: '#fff', resize: 'vertical' }}></textarea>
             </div>
 
+            <div className="form-group" style={{ textAlign: 'left', marginTop: '1.5rem' }}>
+              <label htmlFor="hoja_vida" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem', marginBottom: '0.5rem' }}>Carga tu Hoja de Vida (Opcional — PDF o Word, máx. 5MB)</label>
+              <input
+                type="file"
+                id="hoja_vida"
+                name="hoja_vida"
+                accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                style={{ padding: '0.6rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(0,0,0,0.2)', color: '#fff', width: '100%' }}
+              />
+            </div>
+
             <div className="contacto__buttons" style={{ marginTop: '2rem' }}>
               <button disabled={isPending} type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem' }}>
                 {isPending ? 'Enviando Datos...' : 'Enviar y Unirme'}

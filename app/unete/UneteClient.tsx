@@ -74,6 +74,17 @@ export default function UnetePage() {
                   <textarea id="mensaje" name="mensaje" rows={4} placeholder="Soy profesional en salud, docencia, logística, etc..." style={{ padding: '0.8rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(0,0,0,0.2)', color: '#fff', resize: 'vertical' }}></textarea>
                 </div>
 
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  <label htmlFor="hoja_vida" style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)' }}>Carga tu Hoja de Vida (Opcional — PDF o Word, máx. 5MB)</label>
+                  <input
+                    type="file"
+                    id="hoja_vida"
+                    name="hoja_vida"
+                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    style={{ padding: '0.6rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(0,0,0,0.2)', color: '#fff', width: '100%' }}
+                  />
+                </div>
+
                 <button disabled={isPending} type="submit" className="btn btn-primary" style={{ marginTop: '1rem', padding: '1rem', fontSize: '1.1rem' }}>
                   {isPending ? 'Enviando Solicitud...' : 'Registrarme como Voluntario'}
                 </button>

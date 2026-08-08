@@ -633,6 +633,7 @@ export default function AdminPortal() {
                     <th style={{ padding: '1rem' }}>Contacto</th>
                     <th style={{ padding: '1rem' }}>País</th>
                     <th style={{ padding: '1rem' }}>Mensaje/Habilidades</th>
+                    <th style={{ padding: '1rem' }}>Hoja de Vida</th>
                     <th style={{ padding: '1rem' }}>Estado</th>
                     <th style={{ padding: '1rem', textAlign: 'center' }}>Acciones</th>
                   </tr>
@@ -647,10 +648,23 @@ export default function AdminPortal() {
                       <td style={{ padding: '1.2rem 1rem' }}>{item.pais || 'No especificado'}</td>
                       <td style={{ padding: '1.2rem 1rem', color: '#aaa', maxWidth: '280px', whiteSpace: 'normal', wordBreak: 'break-word' }}>{item.mensaje || 'Sin detalles'}</td>
                       <td style={{ padding: '1.2rem 1rem' }}>
-                        <span style={{ 
-                          padding: '0.25rem 0.75rem', 
-                          borderRadius: '8px', 
-                          fontSize: '0.8rem', 
+                        {item.hoja_vida_key ? (
+                          <a
+                            href={`/api/voluntarios-cv/${item.id}?token=${encodeURIComponent(authToken)}`}
+                            style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(0, 153, 239, 0.1)', border: '1px solid rgba(0, 153, 239, 0.3)', color: 'var(--color-cyan)', fontSize: '0.8rem', fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}
+                            title={item.hoja_vida_nombre || 'Descargar hoja de vida'}
+                          >
+                            📄 Descargar
+                          </a>
+                        ) : (
+                          <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.85rem' }}>—</span>
+                        )}
+                      </td>
+                      <td style={{ padding: '1.2rem 1rem' }}>
+                        <span style={{
+                          padding: '0.25rem 0.75rem',
+                          borderRadius: '8px',
+                          fontSize: '0.8rem',
                           fontWeight: 700,
                           background: item.estado === 'Aprobado' ? 'rgba(76, 175, 80, 0.2)' : item.estado === 'Contactado' ? 'rgba(50, 166, 0, 0.2)' : item.estado === 'Rechazado' ? 'rgba(229, 72, 77, 0.2)' : 'rgba(0, 153, 239, 0.15)',
                           color: item.estado === 'Aprobado' ? '#4caf50' : item.estado === 'Contactado' ? 'var(--color-violet)' : item.estado === 'Rechazado' ? 'var(--color-magenta)' : 'var(--color-cyan)',
