@@ -54,18 +54,18 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              // Scripts: solo del propio dominio y scripts inline de Next.js
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+              // Scripts: propio dominio, scripts inline de Next.js, y el SDK de PayPal
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com https://www.paypalobjects.com",
               // Estilos: propios e inline
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               // Fuentes: propias y Google Fonts
               "font-src 'self' https://fonts.gstatic.com",
-              // Imágenes: propias y datos base64
-              "img-src 'self' data:",
-              // Conexiones de red: propias, InsForge, Resend
-              "connect-src 'self' https://*.insforge.app https://api.resend.com",
-              // Frames: solo el propio dominio (visor de hoja de vida en el admin)
-              "frame-src 'self'",
+              // Imágenes: propias, datos base64, e íconos de PayPal
+              "img-src 'self' data: https://www.paypalobjects.com",
+              // Conexiones de red: propias, InsForge, Resend, PayPal
+              "connect-src 'self' https://*.insforge.app https://api.resend.com https://www.paypal.com https://www.paypalobjects.com",
+              // Frames: propio dominio (visor de hoja de vida) y el botón alojado de PayPal
+              "frame-src 'self' https://www.paypal.com",
               // Objetos embebidos: ninguno
               "object-src 'none'",
               // Formularios: solo al propio dominio

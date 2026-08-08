@@ -4,6 +4,7 @@ import React, { useActionState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { submitContact, type ActionState } from '../actions/contact';
+import PayPalDonateButton from '../components/PayPalDonateButton';
 
 const initialState: ActionState = { success: false };
 
@@ -26,7 +27,21 @@ export default function DonacionesPage() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
-            
+
+            {/* Donación en Línea con PayPal */}
+            <div className="glass-panel" style={{ padding: '2.5rem' }}>
+              <h3 style={{ fontSize: '1.5rem', color: 'var(--color-cyan)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                Donar en Línea con PayPal
+              </h3>
+              <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '2rem' }}>
+                Haz tu aporte de forma rápida y segura con tarjeta o tu cuenta de PayPal, sin necesidad de registrar transferencias manuales.
+              </p>
+              <div style={{ background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <PayPalDonateButton />
+              </div>
+            </div>
+
             {/* Opciones de Donación Financiera */}
             <div className="glass-panel" style={{ padding: '2.5rem' }}>
               <h3 style={{ fontSize: '1.5rem', color: 'var(--color-cyan)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
