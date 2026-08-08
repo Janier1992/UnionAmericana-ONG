@@ -27,6 +27,7 @@ export default function PayPalDonateButton() {
       <Script
         src={`https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&components=hosted-buttons&disable-funding=venmo&currency=USD`}
         strategy="afterInteractive"
+        crossOrigin="anonymous"
         onReady={renderButton}
       />
       <div id={PAYPAL_CONTAINER_ID} />
