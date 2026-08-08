@@ -35,6 +35,7 @@ export default function AdminPortal() {
   const [isUploadingDoc, setIsUploadingDoc] = useState(false);
   const [docUpdatingId, setDocUpdatingId] = useState<string | null>(null);
   const [viewingDoc, setViewingDoc] = useState<DocumentoLegal | null>(null);
+  const [viewingCV, setViewingCV] = useState<{ id: string; nombre: string } | null>(null);
 
   // Auth Handler against Insforge
   const handleAuth = async (e: React.FormEvent) => {
@@ -125,6 +126,23 @@ export default function AdminPortal() {
     setUpdatingId(id);
     try {
       const res = await deleteRecord('voluntarios', id, authToken);
+      if (res.success) {
+        await loadData(authToken);
+      } else {
+        alert(`Error al eliminar: ${res.error}`);
+      }
+    } catch (e: any) {
+      alert(`Error de red: ${e.message}`);
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
+  const handleDeleteDonacion = async (id: string) => {
+    if (!confirm('¿Estás seguro de que deseas eliminar permanentemente este registro de donación?')) return;
+    setUpdatingId(id);
+    try {
+      const res = await deleteRecord('donaciones', id, authToken);
       if (res.success) {
         await loadData(authToken);
       } else {
@@ -649,13 +667,24 @@ export default function AdminPortal() {
                       <td style={{ padding: '1.2rem 1rem', color: '#aaa', maxWidth: '280px', whiteSpace: 'normal', wordBreak: 'break-word' }}>{item.mensaje || 'Sin detalles'}</td>
                       <td style={{ padding: '1.2rem 1rem' }}>
                         {item.hoja_vida_key ? (
-                          <a
-                            href={`/api/voluntarios-cv/${item.id}?token=${encodeURIComponent(authToken)}`}
-                            style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(0, 153, 239, 0.1)', border: '1px solid rgba(0, 153, 239, 0.3)', color: 'var(--color-cyan)', fontSize: '0.8rem', fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}
-                            title={item.hoja_vida_nombre || 'Descargar hoja de vida'}
-                          >
-                            📄 Descargar
-                          </a>
+                          <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                            {/\.pdf$/i.test(item.hoja_vida_nombre || item.hoja_vida_key) && (
+                              <button
+                                onClick={() => setViewingCV({ id: item.id, nombre: item.hoja_vida_nombre || 'Hoja de Vida.pdf' })}
+                                style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(50, 166, 0, 0.15)', border: '1px solid var(--color-violet)', color: 'var(--color-violet)', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}
+                                title="Ver dentro del portal"
+                              >
+                                👁️ Ver
+                              </button>
+                            )}
+                            <a
+                              href={`/api/voluntarios-cv/${item.id}?token=${encodeURIComponent(authToken)}`}
+                              style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(0, 153, 239, 0.1)', border: '1px solid rgba(0, 153, 239, 0.3)', color: 'var(--color-cyan)', fontSize: '0.8rem', fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}
+                              title={item.hoja_vida_nombre || 'Descargar hoja de vida'}
+                            >
+                              📄 Descargar
+                            </a>
+                          </div>
                         ) : (
                           <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.85rem' }}>—</span>
                         )}
@@ -759,6 +788,7 @@ export default function AdminPortal() {
                     <th style={{ padding: '1rem' }}>País</th>
                     <th style={{ padding: '1rem' }}>Detalles de la Contribución</th>
                     <th style={{ padding: '1rem' }}>Monto Est. / Recurso</th>
+                    <th style={{ padding: '1rem', textAlign: 'center' }}>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -771,6 +801,19 @@ export default function AdminPortal() {
                       <td style={{ padding: '1.2rem 1rem' }}>{item.pais || 'No especificado'}</td>
                       <td style={{ padding: '1.2rem 1rem', color: '#aaa', maxWidth: '300px', whiteSpace: 'normal', wordBreak: 'break-word' }}>{item.mensaje || 'Sin detalles'}</td>
                       <td style={{ padding: '1.2rem 1rem', fontWeight: 700, color: 'var(--color-cyan)' }}>{item.monto || 'Tangible (Insumos)'}</td>
+                      <td style={{ padding: '1.2rem 1rem', textAlign: 'center' }}>
+                        {updatingId === item.id ? (
+                          <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)' }}>Procesando...</span>
+                        ) : (
+                          <button
+                            onClick={() => handleDeleteDonacion(item.id)}
+                            style={{ padding: '0.35rem 0.75rem', borderRadius: '6px', background: 'rgba(229, 72, 77, 0.2)', border: '1px solid #E5484D', color: '#fff', fontSize: '0.8rem', cursor: 'pointer', fontWeight: 600 }}
+                            title="Eliminar de la Base de Datos"
+                          >
+                            🗑️ Eliminar
+                          </button>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -1082,6 +1125,46 @@ export default function AdminPortal() {
 
       {viewingDoc && (
         <SecurePdfViewer documento={viewingDoc} onClose={() => setViewingDoc(null)} />
+      )}
+
+      {viewingCV && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, zIndex: 2100,
+            background: 'rgba(0,0,0,0.92)',
+            display: 'flex', flexDirection: 'column',
+          }}
+        >
+          <div style={{
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            padding: '1rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)',
+            background: 'rgba(10,10,15,0.9)',
+          }}>
+            <span style={{ color: '#fff', fontWeight: 600, fontFamily: 'var(--font-heading)' }}>
+              {viewingCV.nombre}
+            </span>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <a
+                href={`/api/voluntarios-cv/${viewingCV.id}?token=${encodeURIComponent(authToken)}`}
+                style={{ background: 'rgba(0, 153, 239, 0.1)', border: '1px solid rgba(0, 153, 239, 0.3)', borderRadius: '8px', padding: '0.5rem 1rem', color: 'var(--color-cyan)', cursor: 'pointer', fontSize: '0.85rem', textDecoration: 'none', fontWeight: 600 }}
+              >
+                📄 Descargar
+              </a>
+              <button
+                onClick={() => setViewingCV(null)}
+                aria-label="Cerrar"
+                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '0.5rem 1rem', color: '#fff', cursor: 'pointer', fontSize: '0.85rem' }}
+              >
+                ✕ Cerrar
+              </button>
+            </div>
+          </div>
+          <iframe
+            src={`/api/voluntarios-cv/${viewingCV.id}?token=${encodeURIComponent(authToken)}&disposition=inline`}
+            title={viewingCV.nombre}
+            style={{ flex: 1, width: '100%', border: 'none', background: '#fff' }}
+          />
+        </div>
       )}
     </div>
   );

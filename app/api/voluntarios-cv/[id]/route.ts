@@ -22,6 +22,7 @@ export async function GET(
   const { id } = await params;
   const { searchParams } = new URL(req.url);
   const token = searchParams.get('token');
+  const inline = searchParams.get('disposition') === 'inline';
 
   if (!UUID_RE.test(id)) {
     return NextResponse.json({ error: 'Identificador inválido' }, { status: 400 });
@@ -71,7 +72,7 @@ export async function GET(
       status: 200,
       headers: {
         'Content-Type': contentType,
-        'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Disposition': `${inline ? 'inline' : 'attachment'}; filename="${filename}"`,
         'X-Content-Type-Options': 'nosniff',
         'Cache-Control': 'no-store',
       },
