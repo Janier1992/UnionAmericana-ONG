@@ -55,21 +55,21 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               // Scripts: propio dominio, scripts inline de Next.js, y el SDK de PayPal
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com https://www.paypalobjects.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.paypal.com https://*.paypalobjects.com",
               // Estilos: propios e inline
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               // Fuentes: propias y Google Fonts
               "font-src 'self' https://fonts.gstatic.com",
-              // Imágenes: propias, datos base64, e íconos de PayPal
-              "img-src 'self' data: https://www.paypalobjects.com",
-              // Conexiones de red: propias, InsForge, Resend, PayPal
-              "connect-src 'self' https://*.insforge.app https://api.resend.com https://www.paypal.com https://www.paypalobjects.com",
-              // Frames: propio dominio (visor de hoja de vida) y el botón alojado de PayPal
-              "frame-src 'self' https://www.paypal.com",
+              // Imágenes: propias, datos base64, e imágenes/íconos de PayPal (ej. pics.paypal.com)
+              "img-src 'self' data: https://*.paypal.com https://*.paypalobjects.com",
+              // Conexiones de red: propias, InsForge, Resend, y los distintos subdominios de PayPal (api., www., etc.)
+              "connect-src 'self' https://*.insforge.app https://api.resend.com https://*.paypal.com https://*.paypalobjects.com",
+              // Frames: propio dominio (visor de hoja de vida) y el checkout de PayPal
+              "frame-src 'self' https://*.paypal.com",
               // Objetos embebidos: ninguno
               "object-src 'none'",
-              // Formularios: solo al propio dominio
-              "form-action 'self'",
+              // Formularios: propio dominio y el envío del botón alojado de PayPal
+              "form-action 'self' https://*.paypal.com",
               // Bloquea contenido mixto HTTP/HTTPS
               "upgrade-insecure-requests",
             ].join('; '),
