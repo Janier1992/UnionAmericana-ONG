@@ -83,74 +83,53 @@ export default function Pillars() {
   ];
 
   return (
-    <section className="section pilares" id="pilares" style={{ backgroundColor: '#0A0A0A', padding: 'var(--space-2xl) 0' }}>
-      <div className="container">
-        <motion.div 
-          className="pilares__header"
-          initial={{ opacity: 0, y: -20 }}
+    <section className="ld-section pilares" id="pilares">
+      <div className="ld-container">
+        <motion.div
+          className="ld-head"
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          style={{ textAlign: 'center', marginBottom: 'var(--space-xl)' }}
         >
-          <p className="overline" style={{ color: 'var(--color-primary)' }}>Nuestro Modelo de Intervención</p>
-          <h2 style={{ color: 'var(--color-text-main)', fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.15 }}>Los 4 Pilares</h2>
+          <p className="ld-overline">Nuestro modelo de intervención</p>
+          <h2 className="ld-h2">Los 4 pilares</h2>
         </motion.div>
 
-        <motion.div 
-          className="pilares__grid"
+        <motion.div
+          className="ld-grid ld-grid--4"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}
         >
           {pillarsData.map((pillar, idx) => (
-            <motion.div 
-              key={pillar.id} 
-              className="pilar-card" 
+            <motion.article
+              key={pillar.id}
+              className="ld-card ld-card--link"
               variants={cardVariants}
-              whileHover={{ 
-                scale: 1.03, 
-                y: -8,
-                boxShadow: '0 12px 40px rgba(0, 153, 239, 0.15), inset 0 0 0 1px rgba(0, 153, 239, 0.1)'
-              }}
               onClick={() => setActivePillar(idx)}
-              style={{
-                backgroundColor: 'rgba(255,255,255,0.02)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                borderRadius: '16px',
-                display: 'flex',
-                flexDirection: 'column',
-                position: 'relative',
-                overflow: 'hidden',
-                cursor: 'pointer',
-                transition: 'all var(--duration-fast) var(--ease-smooth)'
-              }}
             >
-              <div style={{ height: '200px', width: '100%', overflow: 'hidden', position: 'relative' }}>
-                <img src={pillar.image} alt={pillar.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(17,17,17,1))' }} />
+              <div className="ld-card__pic">
+                <img src={pillar.image} alt="" loading="lazy" />
               </div>
-              <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', flexGrow: 1, position: 'relative' }}>
-                <div style={{ position: 'absolute', top: '10px', right: '15px', fontSize: '5rem', color: 'rgba(0, 153, 239, 0.05)', fontWeight: 800, fontFamily: 'var(--font-heading)', lineHeight: 0.8 }}>
-                  {pillar.id}
-                </div>
-                <h3 style={{ color: 'var(--color-text-main)', fontSize: '1.4rem', fontFamily: 'var(--font-heading)', zIndex: 1 }}>{pillar.title}</h3>
-                <p style={{ color: '#aaa', fontSize: '0.95rem', lineHeight: 1.6, zIndex: 1, flexGrow: 1 }}>{pillar.desc}</p>
-                <div style={{ zIndex: 1, marginTop: '1rem', borderTop: '1px solid #222', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ color: 'var(--color-cyan)', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '1px' }}>Horizonte: {pillar.time}</span>
-                  <span style={{ color: 'var(--color-violet)', fontSize: '0.9rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.2rem' }}>
-                    Saber más 
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </span>
-                </div>
+              <div className="ld-card__body">
+                <span className="ld-tag">Pilar {pillar.id} · {pillar.time}</span>
+                <h3 className="ld-card__title">{pillar.title}</h3>
+                <p className="ld-card__text">{pillar.desc}</p>
+                <button
+                  type="button"
+                  className="ld-card__more"
+                  aria-label={`Saber más sobre ${pillar.title}`}
+                  onClick={(e) => { e.stopPropagation(); setActivePillar(idx); }}
+                >
+                  Saber más
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </motion.div>
       </div>
