@@ -5,6 +5,70 @@ import { getRecords, loginAdmin, updateRecord, deleteRecord, createContactRecord
 import { getEmailLogs, type EmailLog } from '../actions/email';
 import { listarDocumentosLegalesAdmin, subirDocumentoLegal, eliminarDocumentoLegal, type DocumentoLegal } from '../actions/documentos';
 import { SecurePdfViewer } from '../components/LegalDocuments';
+import { requestPasswordReset, resetPasswordWithCode, resetPasswordWithToken } from '../actions/password-reset';
+
+const authInputStyle: React.CSSProperties = {
+  padding: '0.9rem',
+  borderRadius: '10px',
+  border: '1px solid rgba(255,255,255,0.15)',
+  background: 'rgba(0,0,0,0.4)',
+  color: '#fff',
+  fontSize: '1rem',
+  width: '100%',
+  boxSizing: 'border-box',
+};
+
+// Campo de contraseña con "ojito" para mostrar/ocultar lo que se escribe
+function PasswordField({
+  id, label, value, onChange, placeholder = '••••••••', autoComplete, minLength,
+}: {
+  id: string; label: string; value: string; onChange: (v: string) => void;
+  placeholder?: string; autoComplete?: string; minLength?: number;
+}) {
+  const [visible, setVisible] = useState(false);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', textAlign: 'left' }}>
+      <label htmlFor={id} style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>{label}</label>
+      <div style={{ position: 'relative' }}>
+        <input
+          type={visible ? 'text' : 'password'}
+          id={id}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          autoComplete={autoComplete}
+          minLength={minLength}
+          required
+          style={{ ...authInputStyle, paddingRight: '3rem' }}
+        />
+        <button
+          type="button"
+          onClick={() => setVisible((v) => !v)}
+          aria-label={visible ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+          aria-pressed={visible}
+          title={visible ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+          style={{
+            position: 'absolute', right: '0.4rem', top: '50%', transform: 'translateY(-50%)',
+            width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: visible ? 'var(--color-cyan)' : 'rgba(255,255,255,0.6)', borderRadius: '8px',
+          }}
+        >
+          {visible ? (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+              <line x1="1" y1="1" x2="23" y2="23" />
+            </svg>
+          ) : (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          )}
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminPortal() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -13,6 +77,15 @@ export default function AdminPortal() {
   const [password, setPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  // Recuperación de contraseña
+  const [authView, setAuthView] = useState<'login' | 'forgot' | 'code' | 'reset'>('login');
+  const [infoMsg, setInfoMsg] = useState('');
+  const [resetCode, setResetCode] = useState('');
+  const [resetToken, setResetToken] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isBusy, setIsBusy] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
   const [activeTab, setActiveTab] = useState<'dashboard' | 'voluntarios' | 'donaciones' | 'contactos' | 'emails' | 'documentos'>('dashboard');
 
   // Load session from sessionStorage on mount
@@ -23,7 +96,29 @@ export default function AdminPortal() {
       setIsAuthenticated(true);
       setAuthToken(savedToken);
     }
+
+    // Si el usuario llegó desde el enlace del correo de recuperación de contraseña
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('insforge_type') === 'reset_password') {
+      const status = params.get('insforge_status');
+      const token = params.get('token') || params.get('insforge_token');
+      if (status === 'ready' && token) {
+        setResetToken(token);
+        setAuthView('reset');
+      } else {
+        setErrorMsg('El enlace de recuperación es inválido o venció. Solicita uno nuevo.');
+        setAuthView('forgot');
+      }
+      window.history.replaceState({}, '', window.location.pathname);
+    }
   }, []);
+
+  // Cuenta regresiva para reenviar el correo de recuperación
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const t = setTimeout(() => setCooldown((c) => c - 1), 1000);
+    return () => clearTimeout(t);
+  }, [cooldown]);
   
   // Real-time Database state
   const [voluntarios, setVoluntarios] = useState<any[]>([]);
@@ -58,6 +153,61 @@ export default function AdminPortal() {
     } finally {
       setIsLoggingIn(false);
     }
+  };
+
+  const goTo = (view: 'login' | 'forgot' | 'code' | 'reset') => {
+    setAuthView(view);
+    setErrorMsg('');
+    setInfoMsg('');
+    setNewPassword('');
+    setConfirmPassword('');
+    setResetCode('');
+  };
+
+  const sendResetEmail = async () => {
+    setIsBusy(true);
+    setErrorMsg('');
+    const res = await requestPasswordReset(email);
+    setIsBusy(false);
+    if (res.success) {
+      setAuthView('code');
+      setInfoMsg('');
+      setCooldown(60);
+    } else {
+      setErrorMsg(res.error || 'No se pudo enviar el correo.');
+    }
+  };
+
+  const handleForgot = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await sendResetEmail();
+  };
+
+  const finishReset = () => {
+    setAuthView('login');
+    setPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+    setResetCode('');
+    setResetToken('');
+    setErrorMsg('');
+    setInfoMsg('Contraseña actualizada. Ya puedes iniciar sesión con tu nueva contraseña.');
+  };
+
+  const handleReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg('');
+    if (newPassword !== confirmPassword) {
+      setErrorMsg('Las contraseñas no coinciden.');
+      return;
+    }
+    setIsBusy(true);
+    const res = authView === 'reset'
+      ? await resetPasswordWithToken(resetToken, newPassword)
+      : await resetPasswordWithCode(email, resetCode, newPassword);
+    setIsBusy(false);
+    if (res.success) finishReset();
+    else setErrorMsg(res.error || 'No se pudo cambiar la contraseña.');
   };
 
   // Logout Handler
@@ -277,66 +427,139 @@ export default function AdminPortal() {
             </svg>
           </a>
           <h2 style={{ fontSize: '1.8rem', color: '#fff', marginBottom: '0.5rem', fontFamily: 'var(--font-heading)' }}>
-            Portal Administrativo
+            {authView === 'login' ? 'Portal Administrativo' : authView === 'reset' ? 'Nueva contraseña' : 'Recuperar contraseña'}
           </h2>
           <p className="overline" style={{ color: 'var(--color-cyan)', fontSize: '0.8rem', letterSpacing: '2px', marginBottom: '2rem' }}>
             CRM La Unión Americana (Insforge Auth)
           </p>
 
-          <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-            
-            {/* Email Field */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', textAlign: 'left' }}>
-              <label htmlFor="email" style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>Correo Electrónico *</label>
-              <input 
-                type="email" 
-                id="email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="gerencia@launionamericana.org" 
-                required 
-                style={{ 
-                  padding: '0.9rem', 
-                  borderRadius: '10px', 
-                  border: '1px solid rgba(255,255,255,0.15)', 
-                  background: 'rgba(0,0,0,0.4)', 
-                  color: '#fff',
-                  fontSize: '1rem'
-                }} 
-              />
-            </div>
+          {authView === 'login' && (
+            <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', textAlign: 'left' }}>
+                <label htmlFor="email" style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>Correo Electrónico *</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="gerencia@launionamericana.org"
+                  autoComplete="username"
+                  required
+                  style={authInputStyle}
+                />
+              </div>
 
-            {/* Password Field */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', textAlign: 'left' }}>
-              <label htmlFor="password" style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>Contraseña *</label>
-              <input 
-                type="password" 
-                id="password" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••" 
-                required 
-                style={{ 
-                  padding: '0.9rem', 
-                  borderRadius: '10px', 
-                  border: '1px solid rgba(255,255,255,0.15)', 
-                  background: 'rgba(0,0,0,0.4)', 
-                  color: '#fff',
-                  fontSize: '1rem'
-                }} 
-              />
-            </div>
+              <PasswordField id="password" label="Contraseña *" value={password} onChange={setPassword} autoComplete="current-password" />
 
-            {errorMsg && (
-              <p style={{ color: 'var(--color-magenta)', fontSize: '0.85rem', margin: 0, textAlign: 'left' }}>
-                ⚠️ {errorMsg}
+              <button
+                type="button"
+                onClick={() => goTo('forgot')}
+                style={{ alignSelf: 'flex-end', marginTop: '-0.5rem', fontSize: '0.85rem', color: 'var(--color-cyan)', textDecoration: 'underline', textUnderlineOffset: '3px' }}
+              >
+                ¿Olvidaste tu contraseña?
+              </button>
+
+              {infoMsg && (
+                <p role="status" style={{ color: '#6FE03A', fontSize: '0.85rem', margin: 0, textAlign: 'left' }}>✔ {infoMsg}</p>
+              )}
+              {errorMsg && (
+                <p role="alert" style={{ color: 'var(--color-magenta)', fontSize: '0.85rem', margin: 0, textAlign: 'left' }}>⚠️ {errorMsg}</p>
+              )}
+
+              <button disabled={isLoggingIn} type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem', marginTop: '0.5rem' }}>
+                {isLoggingIn ? 'Iniciando Sesión...' : 'Ingresar al Portal'}
+              </button>
+            </form>
+          )}
+
+          {authView === 'forgot' && (
+            <form onSubmit={handleForgot} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+              <p style={{ margin: 0, textAlign: 'left', fontSize: '0.9rem', color: 'rgba(255,255,255,0.75)' }}>
+                Ingresa el correo de tu cuenta y te enviaremos las instrucciones para crear una nueva contraseña.
               </p>
-            )}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', textAlign: 'left' }}>
+                <label htmlFor="reset-email" style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>Correo Electrónico *</label>
+                <input
+                  type="email"
+                  id="reset-email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="gerencia@launionamericana.org"
+                  autoComplete="username"
+                  required
+                  style={authInputStyle}
+                />
+              </div>
+              {errorMsg && (
+                <p role="alert" style={{ color: 'var(--color-magenta)', fontSize: '0.85rem', margin: 0, textAlign: 'left' }}>⚠️ {errorMsg}</p>
+              )}
+              <button disabled={isBusy} type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem' }}>
+                {isBusy ? 'Enviando...' : 'Enviar instrucciones'}
+              </button>
+              <button type="button" onClick={() => goTo('login')} style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+                ← Volver a iniciar sesión
+              </button>
+            </form>
+          )}
 
-            <button disabled={isLoggingIn} type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem', marginTop: '0.5rem' }}>
-              {isLoggingIn ? 'Iniciando Sesión...' : 'Ingresar al Portal'}
-            </button>
-          </form>
+          {(authView === 'code' || authView === 'reset') && (
+            <form onSubmit={handleReset} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+              {authView === 'code' ? (
+                <>
+                  <p role="status" style={{ margin: 0, textAlign: 'left', fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)' }}>
+                    Si <strong>{email}</strong> está registrado, te enviamos un correo. Revisa también la carpeta de spam.
+                    Escribe aquí el código de 6 dígitos y elige tu nueva contraseña. Si en lugar de un código recibiste un
+                    enlace, ábrelo para definir tu nueva contraseña.
+                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', textAlign: 'left' }}>
+                    <label htmlFor="reset-code" style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>Código de 6 dígitos *</label>
+                    <input
+                      type="text"
+                      id="reset-code"
+                      inputMode="numeric"
+                      autoComplete="one-time-code"
+                      maxLength={6}
+                      pattern="[0-9]{6}"
+                      value={resetCode}
+                      onChange={(e) => setResetCode(e.target.value.replace(/\D/g, ''))}
+                      placeholder="123456"
+                      required
+                      style={{ ...authInputStyle, letterSpacing: '0.4em', textAlign: 'center', fontSize: '1.2rem' }}
+                    />
+                  </div>
+                </>
+              ) : (
+                <p style={{ margin: 0, textAlign: 'left', fontSize: '0.9rem', color: 'rgba(255,255,255,0.75)' }}>
+                  Elige tu nueva contraseña.
+                </p>
+              )}
+
+              <PasswordField id="new-password" label="Nueva contraseña * (mínimo 8 caracteres)" value={newPassword} onChange={setNewPassword} autoComplete="new-password" minLength={8} />
+              <PasswordField id="confirm-password" label="Confirmar nueva contraseña *" value={confirmPassword} onChange={setConfirmPassword} autoComplete="new-password" minLength={8} />
+
+              {errorMsg && (
+                <p role="alert" style={{ color: 'var(--color-magenta)', fontSize: '0.85rem', margin: 0, textAlign: 'left' }}>⚠️ {errorMsg}</p>
+              )}
+
+              <button disabled={isBusy} type="submit" className="btn btn-primary" style={{ width: '100%', padding: '1rem' }}>
+                {isBusy ? 'Guardando...' : 'Cambiar contraseña'}
+              </button>
+
+              {authView === 'code' && (
+                <button
+                  type="button"
+                  disabled={isBusy || cooldown > 0}
+                  onClick={sendResetEmail}
+                  style={{ fontSize: '0.85rem', color: cooldown > 0 ? 'rgba(255,255,255,0.4)' : 'var(--color-cyan)', textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                >
+                  {cooldown > 0 ? `Reenviar correo en ${cooldown}s` : 'Reenviar correo'}
+                </button>
+              )}
+              <button type="button" onClick={() => goTo('login')} style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+                ← Volver a iniciar sesión
+              </button>
+            </form>
+          )}
         </div>
       </div>
     );
