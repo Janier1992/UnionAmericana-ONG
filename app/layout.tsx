@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./components/Sections.css";
+import "./components/Landing.css";
 
 // Evita que CDNs sin invalidación atada al deploy (ej. Hostinger hCDN, a diferencia
 // de Vercel) sirvan una versión vieja del sitio durante horas/días tras cada redespliegue.

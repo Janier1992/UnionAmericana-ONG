@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 
 function animateCounter(element: HTMLElement, target: number) {
   const duration = 2000;
@@ -47,87 +46,43 @@ export default function Impact() {
     return () => observer.disconnect();
   }, []);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { staggerChildren: 0.2 }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.9, y: 30 },
-    visible: { 
-      opacity: 1, 
-      scale: 1, 
-      y: 0,
-      transition: { duration: 0.6 }
-    }
-  };
+  const stats = [
+    { value: 500000, label: 'Personas asistidas en crisis' },
+    { value: 100000, label: 'Talentos apoyados' },
+    { value: 25, label: 'Biofactorías operativas' },
+    { value: 20, label: 'Países integrados' },
+  ];
 
   return (
-    <>
-      <div className="section-divider" />
-
-      <section className="section impacto" id="proyecciones">
-        <div className="container">
-          <motion.div 
-            className="impacto__header"
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-          >
-            <p className="overline">Hacia el Futuro</p>
-            <h2 style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', lineHeight: 1.15, marginBottom: '1.5rem' }}>
-              Proyecciones<br />
-              <span style={{ 
-                background: 'linear-gradient(90deg, var(--color-cyan), var(--color-violet))',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                fontStyle: 'italic',
-                fontWeight: 700
-              }}>2040</span>
-            </h2>
-            <p style={{ marginTop: '1rem', color: 'rgba(255,255,255,0.7)', maxWidth: '600px' }}>
-              No mediremos nuestro éxito por la cantidad de ayuda que damos, sino por la cantidad de comunidades que ya no la necesiten. Estas son nuestras proyecciones para transformar el continente.
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className="impacto__grid"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <motion.div 
-              className="impacto__stat"
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}
-            >
-              <motion.div className="stat-large" variants={cardVariants}>
-                <div className="stat-number" ref={(el) => { statsRef.current[0] = el; }} data-value="500000">0</div>
-                <div className="stat-label">Personas asisitidas en crisis</div>
-              </motion.div>
-              <motion.div className="stat-large" variants={cardVariants}>
-                <div className="stat-number" ref={(el) => { statsRef.current[1] = el; }} data-value="100000">0</div>
-                <div className="stat-label">Talentos apoyados</div>
-              </motion.div>
-              <motion.div className="stat-large" variants={cardVariants}>
-                <div className="stat-number" ref={(el) => { statsRef.current[2] = el; }} data-value="25">0</div>
-                <div className="stat-label">Biofactorías operativas</div>
-              </motion.div>
-              <motion.div className="stat-large" variants={cardVariants}>
-                <div className="stat-number" ref={(el) => { statsRef.current[3] = el; }} data-value="20">0</div>
-                <div className="stat-label">Países integrados</div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
+    <section className="ld-section" id="proyecciones">
+      <div className="ld-container">
+        <div className="ld-head ld-head--row">
+          <div>
+            <p className="ld-overline">Hacia el futuro</p>
+            <h2 className="ld-h2">Proyecciones 2040</h2>
+          </div>
+          <p className="ld-head__note">
+            No mediremos nuestro éxito por la cantidad de ayuda que damos, sino por la cantidad de comunidades que
+            ya no la necesiten.
+          </p>
         </div>
-      </section>
-    </>
+
+        <div className="ld-stats">
+          {stats.map((stat, i) => (
+            <div className="ld-stat" key={stat.label}>
+              <div
+                className="ld-stat__num"
+                ref={(el) => { statsRef.current[i] = el; }}
+                data-value={stat.value}
+              >
+                0
+              </div>
+              <div className="ld-stat__label">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+        <p className="ld-foot-note">Cifras proyectadas a 2040, no resultados actuales.</p>
+      </div>
+    </section>
   );
 }
